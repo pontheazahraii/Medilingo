@@ -2,17 +2,37 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { mockUser } from "@/lib/mock-auth";
 import { Button } from "@/components/ui/button";
+import { useMockClerk } from "./mock-clerk-provider";
 
 // Mock user button (profile icon)
 export function MockUserButton({ afterSignOutUrl }: { afterSignOutUrl?: string }) {
+  const router = useRouter();
+  const mockClerk = useMockClerk();
+
+  const handleSignOut = async () => {
+    try {
+      await mockClerk.signOut();
+      router.push(afterSignOutUrl || "/");
+      toast.success("Logged out successfully");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      toast.error("Failed to log out");
+    }
+  };
+
   return (
-    <Link href={afterSignOutUrl || "/"}>
+    <div 
+      className="relative cursor-pointer"
+      onClick={handleSignOut}
+    >
       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white hover:bg-green-600">
         <span className="text-sm font-bold">{mockUser.firstName?.charAt(0) || "T"}</span>
       </div>
-    </Link>
+    </div>
   );
 }
 

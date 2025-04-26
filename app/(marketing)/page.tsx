@@ -1,12 +1,14 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
+import { useAuth } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 
 const MarketingPage = () => {
+  const { isSignedIn } = useAuth();
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
       <nav className="flex justify-between items-center py-6">
@@ -15,19 +17,26 @@ const MarketingPage = () => {
           <h1 className="text-2xl font-bold ml-2">Medilingo</h1>
         </div>
         <div className="flex items-center gap-x-4">
-          {/* OAuth login directly from here */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => signIn("google", { callbackUrl: "/courses" })}
-          >
-            Login
-          </Button>
-          <Link href="/sign-up">
-            <Button size="sm">
-              Get Started
-            </Button>
-          </Link>
+          {!isSignedIn && (
+            <Link href="/sign-in">
+              <Button variant="ghost" size="sm">
+                Login
+              </Button>
+            </Link>
+          )}
+          {isSignedIn ? (
+            <Link href="/learn">
+              <Button size="sm">
+                Continue Learning
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/sign-up">
+              <Button size="sm">
+                Get Started
+              </Button>
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -41,9 +50,9 @@ const MarketingPage = () => {
               Interactive learning platform designed for medical students, nurses, and healthcare practitioners
             </h3>
             <div className="flex gap-x-4">
-              <Link href="/get-started">
+              <Link href={isSignedIn ? "/learn" : "/sign-up"}>
                 <Button>
-                  Get Started
+                  {isSignedIn ? "Continue Learning" : "Get Started"}
                   <Sparkles className="w-4 h-4 ml-2 fill-white" />
                 </Button>
               </Link>

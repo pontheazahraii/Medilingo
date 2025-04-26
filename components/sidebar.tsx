@@ -6,6 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 import { SidebarItem } from "./sidebar-item";
+import { LogoutButton } from "./logout-button";
 
 type SidebarProps = {
   className?: string;
@@ -41,6 +42,10 @@ export const Sidebar = ({ className }: SidebarProps) => {
         />
         <SidebarItem label="Medical Quests" href="/quests" iconSrc="/quests.svg" />
         <SidebarItem label="Resource Shop" href="/shop" iconSrc="/shop.svg" />
+      </div>
+
+      <div className="mb-2 mt-auto flex flex-col gap-y-2 border-t pt-2">
+        <LogoutButton />
       </div>
 
       <div className="p-4">
