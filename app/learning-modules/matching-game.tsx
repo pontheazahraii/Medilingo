@@ -39,7 +39,7 @@ export const MatchingGame = ({ items, onComplete }: MatchingGameProps) => {
 
   // Initialize the game
   useEffect(() => {
-    // Create an array with terms and definitions as separate items
+    // Create an array with medical terms and definitions as separate items
     const terms = items.map((item) => ({
       id: item.id * 2 - 1,
       content: item.term,
@@ -189,13 +189,13 @@ export const MatchingGame = ({ items, onComplete }: MatchingGameProps) => {
       {isGameComplete && (
         <div className="mt-4 p-4 bg-green-50 rounded-lg text-center">
           <h3 className="text-xl font-bold text-green-700">Great job!</h3>
-          <p className="text-green-600">You completed the matching challenge in {formatTime(timer)}</p>
+          <p className="text-green-600">You completed the medical terminology matching challenge in {formatTime(timer)}</p>
           <Button 
             onClick={() => router.push("/learn")} 
             variant="primary"
             className="mt-3"
           >
-            Continue Learning
+            Continue Medical Learning
           </Button>
         </div>
       )}

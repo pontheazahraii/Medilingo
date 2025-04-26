@@ -1,26 +1,27 @@
 // Mock implementation of db/queries.ts for local development
 import { cache } from "react";
 import { mockUser } from "@/lib/mock-auth";
+import { CARDIOVASCULAR_FLASHCARDS, ANTIBIOTICS_MATCHING_PAIRS } from "@/constants/medical-content";
 
-// Mock data with medical body systems theme
+// Mock data with medical categories theme
 const mockMedicalCategories = [
   {
     id: 1,
-    title: "Cardiovascular",
-    imageSrc: "/cardio-icon.svg",
-    description: "Learn about the heart and circulatory system",
+    title: "Anatomy",
+    imageSrc: "/anatomy-icon.svg",
+    description: "Explore the structure of the human body",
   },
   {
     id: 2,
-    title: "Respiratory",
-    imageSrc: "/respiratory-icon.svg",
-    description: "Study the lungs and breathing system",
+    title: "Physiology",
+    imageSrc: "/physiology-icon.svg",
+    description: "Study how the body's systems function",
   },
   {
     id: 3,
-    title: "Neurological",
-    imageSrc: "/neuro-icon.svg",
-    description: "Explore the brain and nervous system",
+    title: "Pharmacology",
+    imageSrc: "/pharma-icon.svg",
+    description: "Learn about drugs and their effects on the body",
   },
 ];
 
@@ -40,88 +41,102 @@ const mockSubcategories = [
   {
     id: 1,
     categoryId: 1,
-    title: "Cardiac Anatomy", 
-    description: "Learn the structures of the heart",
+    title: "Cardiovascular", 
+    description: "Learn about the heart and circulatory system",
     order: 1,
     learningModules: [
       {
         id: 1,
         subcategoryId: 1,
-        title: "Heart Chambers",
+        title: "Heart Structure Flashcards",
         order: 1,
-        moduleType: "quiz",
+        moduleType: "flashcards",
+        completed: false,
+        challenges: CARDIOVASCULAR_FLASHCARDS.map((card, index) => ({
+          id: index + 1,
+          moduleId: 1,
+          type: "SELECT",
+          question: card.term,
+          order: index + 1,
+          completed: false,
+          challengeProgress: [],
+          challengeOptions: [
+            {
+              id: index * 3 + 1,
+              challengeId: index + 1,
+              text: card.definition,
+              correct: true,
+              imageSrc: null,
+              audioSrc: null,
+            },
+            {
+              id: index * 3 + 2,
+              challengeId: index + 1,
+              text: "Incorrect definition 1",
+              correct: false,
+              imageSrc: null,
+              audioSrc: null,
+            },
+            {
+              id: index * 3 + 3,
+              challengeId: index + 1,
+              text: "Incorrect definition 2",
+              correct: false,
+              imageSrc: null,
+              audioSrc: null,
+            },
+          ],
+        })),
+      },
+      {
+        id: 2,
+        subcategoryId: 1,
+        title: "Matching Game: Heart Anatomy",
+        order: 2,
+        moduleType: "match",
         completed: false,
         challenges: [
           {
-            id: 1,
-            moduleId: 1,
-            type: "SELECT",
-            question: "Which chamber receives oxygenated blood from the lungs?",
+            id: 100,
+            moduleId: 2,
+            type: "MATCH",
+            question: "Match the heart structures to their definitions",
             order: 1,
             completed: false,
             challengeProgress: [],
-            challengeOptions: [
-              {
-                id: 1,
-                challengeId: 1,
-                text: "Left Atrium",
-                correct: true,
-                imageSrc: null,
-                audioSrc: null,
-              },
-              {
-                id: 2,
-                challengeId: 1,
-                text: "Right Atrium",
-                correct: false,
-                imageSrc: null,
-                audioSrc: null,
-              },
-              {
-                id: 3,
-                challengeId: 1,
-                text: "Left Ventricle",
-                correct: false,
-                imageSrc: null,
-                audioSrc: null,
-              },
-            ],
-          },
+            challengeOptions: [],
+            matchingPairs: CARDIOVASCULAR_FLASHCARDS.slice(0, 5),
+          }
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    categoryId: 3,
+    title: "Antibiotics", 
+    description: "Learn about antibiotics and their mechanisms of action",
+    order: 1,
+    learningModules: [
+      {
+        id: 3,
+        subcategoryId: 2,
+        title: "Matching Game: Antibiotics",
+        order: 1,
+        moduleType: "match",
+        completed: false,
+        challenges: [
           {
-            id: 2,
-            moduleId: 1,
-            type: "SELECT",
-            question: "Which vessel carries blood away from the heart to the body?",
-            order: 2,
+            id: 101,
+            moduleId: 3,
+            type: "MATCH",
+            question: "Match the antibiotics to their mechanisms of action",
+            order: 1,
             completed: false,
             challengeProgress: [],
-            challengeOptions: [
-              {
-                id: 4,
-                challengeId: 2,
-                text: "Aorta",
-                correct: true,
-                imageSrc: null,
-                audioSrc: null,
-              },
-              {
-                id: 5,
-                challengeId: 2,
-                text: "Pulmonary Artery",
-                correct: false,
-                imageSrc: null,
-                audioSrc: null,
-              },
-              {
-                id: 6,
-                challengeId: 2,
-                text: "Vena Cava",
-                correct: false,
-                imageSrc: null,
-                audioSrc: null,
-              },
-            ],
-          },
+            challengeOptions: [],
+            matchingPairs: ANTIBIOTICS_MATCHING_PAIRS,
+          }
         ],
       },
     ],
@@ -163,6 +178,14 @@ export const getCourseById = cache(async (categoryId: number) => {
 });
 
 export const getCourseProgress = cache(async () => {
+  // If there are no modules, return default data for first module
+  if (!mockLearningModules || mockLearningModules.length === 0) {
+    return {
+      activeModule: null,
+      activeModuleId: null,
+    };
+  }
+  
   const firstModule = mockLearningModules[0];
   
   return {
@@ -182,6 +205,10 @@ export const getLesson = cache(async (id?: number) => {
 });
 
 export const getLessonPercentage = cache(async () => {
+  const courseProgress = await getCourseProgress();
+  
+  if (!courseProgress || !courseProgress.activeModuleId) return 0;
+  
   return 25; // Mock 25% completion
 });
 
@@ -193,7 +220,7 @@ export const getTopTenUsers = cache(async () => {
   // Create 10 mock users for the leaderboard
   return Array.from({ length: 10 }, (_, i) => ({
     userId: `mock-user-${i + 1}`,
-    userName: `User ${i + 1}`,
+    userName: `Medical Student ${i + 1}`,
     userImageSrc: "/avatar.png",
     points: 1000 - i * 100,
   }));
