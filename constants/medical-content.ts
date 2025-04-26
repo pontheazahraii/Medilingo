@@ -28,70 +28,82 @@ export type MedicalMatchingPair = {
   subcategory: string;
 };
 
+export type MatchingGame = {
+  id: number;
+  terms: { term: string; definition: string }[];
+};
+
 // Structure of medical categories
 export const MEDICAL_CATEGORIES = [
   {
     id: 1,
-    title: "Anatomy",
+    title: "Clinical Anatomy",
     imageSrc: "/anatomy-icon.svg",
-    description: "Explore the structure of the human body",
-    subcategories: ["Cardiovascular", "Musculoskeletal", "Neuroanatomy"]
+    description: "Essential anatomy knowledge for healthcare practitioners",
+    subcategories: ["Cardiovascular", "Musculoskeletal", "Neuroanatomy", "Respiratory System", "Gastrointestinal"]
   },
   {
     id: 2,
-    title: "Physiology",
+    title: "Clinical Physiology",
     imageSrc: "/physiology-icon.svg",
-    description: "Study how the body's systems function",
-    subcategories: ["Endocrine System", "Renal Physiology", "Respiratory Physiology"]
+    description: "Physiological principles for patient care",
+    subcategories: ["Endocrine Function", "Renal & Fluid Balance", "Respiratory Physiology", "Cardiovascular Function"]
   },
   {
     id: 3,
-    title: "Pharmacology",
+    title: "Pharmacotherapy",
     imageSrc: "/pharma-icon.svg",
-    description: "Learn about drugs and their effects on the body",
-    subcategories: ["Antibiotics", "Antihypertensives", "Anesthetics"]
+    description: "Medication knowledge for healthcare providers",
+    subcategories: ["Antimicrobials", "Cardiovascular Drugs", "Pain Management", "Psychiatric Medications", "Drug Interactions"]
   },
   {
     id: 4,
-    title: "Pathology",
+    title: "Clinical Pathology",
     imageSrc: "/pathology-icon.svg",
-    description: "Study diseases and their effects",
-    subcategories: ["Cancer Types", "Infectious Diseases", "Genetic Disorders"]
+    description: "Disease processes and clinical manifestations",
+    subcategories: ["Oncology", "Infectious Diseases", "Genetic Disorders", "Autoimmune Conditions", "Metabolic Disorders"]
   },
   {
     id: 5,
     title: "Medical Terminology",
     imageSrc: "/terminology-icon.svg",
-    description: "Master the language of medicine",
-    subcategories: ["Prefixes/Suffixes", "Latin/Greek Root Words"]
+    description: "Essential terminology for healthcare documentation",
+    subcategories: ["Prefixes/Suffixes", "Latin/Greek Roots", "Abbreviations & Acronyms", "Specialty-Specific Terms"]
   },
   {
     id: 6,
     title: "Clinical Procedures",
     imageSrc: "/procedures-icon.svg",
-    description: "Learn essential clinical skills",
-    subcategories: ["IV Insertion", "Basic Suturing", "CPR Protocols"]
+    description: "Common procedures for healthcare practitioners",
+    subcategories: ["Vascular Access", "Wound Management", "Airway Management", "Diagnostic Procedures", "Surgical Asepsis"]
   },
   {
     id: 7,
     title: "Patient Communication",
     imageSrc: "/communication-icon.svg",
-    description: "Develop effective provider-patient interaction skills",
-    subcategories: ["Informed Consent", "Bad News Delivery (SPIKES protocol)"]
+    description: "Effective communication skills for healthcare",
+    subcategories: ["Informed Consent", "Breaking Bad News", "Health Literacy", "Cultural Competence", "Interprofessional Communication"]
   },
   {
     id: 8,
-    title: "Health Literacy",
+    title: "Clinical Documentation",
     imageSrc: "/literacy-icon.svg",
-    description: "Help patients understand medical information",
-    subcategories: ["Reading Prescriptions", "Insurance Terms"]
+    description: "Documentation standards for healthcare professionals",
+    subcategories: ["SOAP Notes", "Electronic Health Records", "Discharge Summaries", "Medical Coding Basics"]
   },
   {
     id: 9,
     title: "Emergency Medicine",
     imageSrc: "/emergency-icon.svg",
-    description: "Learn critical emergency care principles",
-    subcategories: ["Trauma Assessment", "Triage Principles"]
+    description: "Critical emergency care concepts for clinicians",
+    subcategories: ["Trauma Assessment", "Resuscitation", "Critical Care", "Disaster Management", "Triage Principles"]
+  },
+  {
+    id: 10,
+    title: "Healthcare Ethics & Law",
+    imageSrc: "/ethics-icon.svg",
+    description: "Ethical and legal foundations for healthcare practice",
+    subcategories: ["Patient Rights", "Confidentiality & HIPAA", "End-of-Life Care", "Professional Boundaries"]
   }
 ];
 
