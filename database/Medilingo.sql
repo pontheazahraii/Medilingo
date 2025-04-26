@@ -1,4 +1,4 @@
-CREATE SCHEMA medilingo AUTHORIZATION medilingo_user;
+CREATE SCHEMA medilingo AUTHORIZATION medilingo_admin;
 SET search_path TO medilingo;
 
 CREATE TABLE "users" (
