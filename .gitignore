@@ -31,3 +31,6 @@ next-env.d.ts
 
 # Cache
 .cache/
+
+# Ignore the .env file
+.env
