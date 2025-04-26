@@ -21,5 +21,5 @@ This service hosts the Node.js backend for Medilingo, deployed using Google Clou
 ### Docker Build Instructions 
 ```Dockerfile
 docker build -t my-node-app .
-docker run -p 3000:3000 my-node-app
+docker run -p 3001:3001 my-node-app
 ```
