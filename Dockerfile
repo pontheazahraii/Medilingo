@@ -1,4 +1,3 @@
-
 # Use an official Node.js image
 FROM node:18
 
@@ -15,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port your app runs on (optional, change if needed)
-EXPOSE 3000
+EXPOSE 3001
 
 # Start your app
 CMD ["node", "start-dev.js"]
