@@ -2,21 +2,17 @@ from fastapi import FastAPI, HTTPException, Query
 import psycopg2
 import psycopg2.extras
 import os
-from typing import List, Optional
+from typing import Optional
 import uvicorn
 from datetime import datetime
 from pydantic import BaseModel
-from dotenv import load_dotenv
 
-# load the env file
-load_dotenv()
-
-app = FastAPI(title="MediLingo API")
+app = FastAPI(title="Medilingo API")
 
 # Database connection settings
-DB_HOST = "35.184.95.75"
-DB_NAME = "medilingo"
-DB_USER = "medilingo_admin"
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")  # Load from environment variable
 
 # Connect to the database
@@ -303,4 +299,4 @@ def create_answer(answer: NewAnswer):
     return new_answer
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
