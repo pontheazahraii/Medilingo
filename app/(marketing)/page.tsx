@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 
@@ -14,11 +15,14 @@ const MarketingPage = () => {
           <h1 className="text-2xl font-bold ml-2">Medilingo</h1>
         </div>
         <div className="flex items-center gap-x-4">
-          <Link href="/sign-in">
-            <Button variant="ghost" size="sm">
-              Login
-            </Button>
-          </Link>
+          {/* OAuth login directly from here */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+          >
+            Login
+          </Button>
           <Link href="/sign-up">
             <Button size="sm">
               Get Started
@@ -26,6 +30,7 @@ const MarketingPage = () => {
           </Link>
         </div>
       </nav>
+
       <div className="flex-1 flex flex-col justify-center">
         <div className="flex flex-col lg:flex-row gap-10 items-center">
           <div className="space-y-6 flex-1">
@@ -39,7 +44,7 @@ const MarketingPage = () => {
               <Link href="/sign-up">
                 <Button>
                   Get Started
-                  <Sparkles className="w-4 h-4 ml-2 fill-white"/>
+                  <Sparkles className="w-4 h-4 ml-2 fill-white" />
                 </Button>
               </Link>
               <Link href="/courses">
@@ -49,6 +54,7 @@ const MarketingPage = () => {
               </Link>
             </div>
           </div>
+
           <div className="max-w-[500px] flex-1">
             <img
               src="/hero.svg"
@@ -58,6 +64,7 @@ const MarketingPage = () => {
           </div>
         </div>
       </div>
+
       <footer className="py-6 text-center text-neutral-600 dark:text-neutral-400">
         <p>© 2023 Medilingo. All rights reserved.</p>
       </footer>
