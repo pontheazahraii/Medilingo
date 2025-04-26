@@ -26,6 +26,10 @@ def get_db_connection():
     conn.cursor_factory = psycopg2.extras.RealDictCursor  # Return results as dictionaries
     return conn
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Medilingo API!"}
+
 # User endpoints
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
