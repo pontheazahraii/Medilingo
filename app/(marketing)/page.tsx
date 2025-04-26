@@ -43,7 +43,7 @@ const MarketingPage = () => {
                 </Button>
               </Link>
               <Link href="/courses">
-                <Button variant="secondary">
+                <Button variant="secondary">git status
                   Explore Body Systems
                 </Button>
               </Link>
