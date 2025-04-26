@@ -1,5 +1,6 @@
 "use client";
 
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 
@@ -14,11 +15,14 @@ const MarketingPage = () => {
           <h1 className="text-2xl font-bold ml-2">Medilingo</h1>
         </div>
         <div className="flex items-center gap-x-4">
-          <Link href="/sign-in">
-            <Button variant="ghost" size="sm">
-              Login
-            </Button>
-          </Link>
+          {/* OAuth login directly from here */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => signIn("google", { callbackUrl: "/courses" })}
+          >
+            Login
+          </Button>
           <Link href="/sign-up">
             <Button size="sm">
               Get Started
@@ -26,29 +30,31 @@ const MarketingPage = () => {
           </Link>
         </div>
       </nav>
+
       <div className="flex-1 flex flex-col justify-center">
         <div className="flex flex-col lg:flex-row gap-10 items-center">
           <div className="space-y-6 flex-1">
             <h1 className="text-4xl sm:text-6xl font-bold text-neutral-800 dark:text-neutral-200">
-              Master medical terminology by body system
+              Master medical terminology for healthcare professionals
             </h1>
             <h3 className="text-xl sm:text-2xl font-medium text-neutral-600 dark:text-neutral-400">
-              Interactive learning for healthcare students and professionals
+              Interactive learning platform designed for medical students, nurses, and healthcare practitioners
             </h3>
             <div className="flex gap-x-4">
-              <Link href="/sign-up">
+              <Link href="/get-started">
                 <Button>
                   Get Started
-                  <Sparkles className="w-4 h-4 ml-2 fill-white"/>
+                  <Sparkles className="w-4 h-4 ml-2 fill-white" />
                 </Button>
               </Link>
               <Link href="/courses">
                 <Button variant="secondary">
-                  Explore Body Systems
+                  Explore Medical Systems
                 </Button>
               </Link>
             </div>
           </div>
+
           <div className="max-w-[500px] flex-1">
             <img
               src="/Home_PAge_Pete_Logo.png"
@@ -58,6 +64,7 @@ const MarketingPage = () => {
           </div>
         </div>
       </div>
+
       <footer className="py-6 text-center text-neutral-600 dark:text-neutral-400">
         <p>© 2025 Medilingo. PantherHacks Production.</p>
       </footer>

@@ -28,6 +28,11 @@ export type MedicalMatchingPair = {
   subcategory: string;
 };
 
+export type MatchingGame = {
+  id: number;
+  terms: { term: string; definition: string }[];
+};
+
 // Structure of medical categories
 export const MEDICAL_CATEGORIES = [
   {
