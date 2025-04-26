@@ -37,8 +37,15 @@ const MedicalLearningPage = async () => {
     userSubscriptionData,
   ]);
 
-  if (!categoryProgress || !userProgress || !userProgress.activeCategory)
+  if (!userProgress || !userProgress.activeCategory)
     redirect("/courses");
+
+  const safeSubcategories = subcategories || [];
+  
+  const safeCategoryProgress = categoryProgress || {
+    activeModule: null,
+    activeModuleId: null
+  };
 
   const isPro = !!userSubscription?.isActive;
 
@@ -58,15 +65,15 @@ const MedicalLearningPage = async () => {
       </StickyWrapper>
       <FeedWrapper>
         <Header title={userProgress.activeCategory.title} />
-        {subcategories.map((subcategory) => (
+        {safeSubcategories.map((subcategory: any) => (
           <div key={subcategory.id} className="mb-10">
             <Subcategory
               id={subcategory.id}
               order={subcategory.order}
               description={subcategory.description}
               title={subcategory.title}
-              modules={subcategory.modules}
-              activeModule={categoryProgress.activeModule}
+              modules={subcategory.modules || []}
+              activeModule={safeCategoryProgress.activeModule}
               activeModulePercentage={modulePercentage}
             />
           </div>

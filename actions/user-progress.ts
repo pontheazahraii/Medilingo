@@ -24,7 +24,9 @@ export const upsertUserProgress = async (categoryId: number) => {
 
   if (!category) throw new Error("Medical category not found.");
 
-  if (!category.subcategories.length || !category.subcategories[0].learningModules.length)
+  if (!category.subcategories || !category.subcategories.length || 
+      !category.subcategories[0].learningModules || 
+      !category.subcategories[0].learningModules.length)
     throw new Error("Medical category is empty.");
 
   const existingUserProgress = await getUserProgress();
