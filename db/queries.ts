@@ -12,12 +12,24 @@ import {
   userProgress,
   userSubscription,
 } from "./schema";
+import { generateMockSubcategories, mockCourseProgress, mockUserProgress } from "./mock-data";
+import { MEDICAL_CATEGORIES } from "@/constants/medical-content";
 
 const DAY_IN_MS = 86_400_000;
+const IS_DEV = process.env.NODE_ENV === "development";
 
 export const getCourses = cache(async () => {
-  const data = await db.query.medicalCategories.findMany();
+  if (IS_DEV) {
+    console.log("Using mock database for development environment");
+    return Promise.resolve(
+      MEDICAL_CATEGORIES.map(category => ({
+        ...category,
+        id: category.id
+      }))
+    );
+  }
 
+  const data = await db.query.medicalCategories.findMany();
   return data;
 });
 
@@ -25,6 +37,11 @@ export const getUserProgress = cache(async () => {
   const { userId } = auth();
 
   if (!userId) return null;
+
+  if (IS_DEV) {
+    console.log("Using mock database for development environment");
+    return mockUserProgress;
+  }
 
   const data = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
@@ -38,12 +55,17 @@ export const getUserProgress = cache(async () => {
 
 export const getUnits = cache(async () => {
   const { userId } = auth();
-  const userProgress = await getUserProgress();
+  const userProgressData = await getUserProgress();
 
-  if (!userId || !userProgress?.activeCategoryId) return [];
+  if (!userId || !userProgressData?.activeCategoryId) return [];
+
+  if (IS_DEV) {
+    console.log("Using mock database for development environment");
+    return generateMockSubcategories();
+  }
 
   const data = await db.query.subcategories.findMany({
-    where: eq(subcategories.categoryId, userProgress.activeCategoryId),
+    where: eq(subcategories.categoryId, userProgressData.activeCategoryId),
     orderBy: (subcategories, { asc }) => [asc(subcategories.order)],
     with: {
       learningModules: {
@@ -64,7 +86,7 @@ export const getUnits = cache(async () => {
 
   const normalizedData = data.map((subcategory) => {
     const modulesWithCompletedStatus = subcategory.learningModules.map((module) => {
-      if (module.challenges.length === 0)
+      if (!module.challenges || module.challenges.length === 0)
         return { ...module, completed: false };
 
       const allCompletedChallenges = module.challenges.every((challenge) => {
@@ -85,6 +107,18 @@ export const getUnits = cache(async () => {
 });
 
 export const getCourseById = cache(async (categoryId: number) => {
+  if (IS_DEV) {
+    console.log("Using mock database for development environment");
+    const category = MEDICAL_CATEGORIES.find(c => c.id === categoryId);
+    if (category) {
+      return {
+        ...category,
+        subcategories: generateMockSubcategories().filter(s => s.categoryId === categoryId)
+      };
+    }
+    return null;
+  }
+
   const data = await db.query.medicalCategories.findFirst({
     where: eq(medicalCategories.id, categoryId),
     with: {
@@ -104,13 +138,18 @@ export const getCourseById = cache(async (categoryId: number) => {
 
 export const getCourseProgress = cache(async () => {
   const { userId } = auth();
-  const userProgress = await getUserProgress();
+  const userProgressData = await getUserProgress();
 
-  if (!userId || !userProgress?.activeCategoryId) return null;
+  if (!userId || !userProgressData?.activeCategoryId) return null;
+
+  if (IS_DEV) {
+    console.log("Using mock database for development environment");
+    return mockCourseProgress;
+  }
 
   const subcategoriesInActiveCategory = await db.query.subcategories.findMany({
     orderBy: (subcategories, { asc }) => [asc(subcategories.order)],
-    where: eq(subcategories.categoryId, userProgress.activeCategoryId),
+    where: eq(subcategories.categoryId, userProgressData.activeCategoryId),
     with: {
       learningModules: {
         orderBy: (learningModules, { asc }) => [asc(learningModules.order)],
@@ -131,7 +170,7 @@ export const getCourseProgress = cache(async () => {
   const firstUncompletedModule = subcategoriesInActiveCategory
     .flatMap((subcategory) => subcategory.learningModules)
     .find((module) => {
-      return module.challenges.some((challenge) => {
+      return module && module.challenges && module.challenges.some((challenge) => {
         return (
           !challenge.challengeProgress ||
           challenge.challengeProgress.length === 0 ||

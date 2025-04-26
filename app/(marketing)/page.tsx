@@ -35,13 +35,13 @@ const MarketingPage = () => {
         <div className="flex flex-col lg:flex-row gap-10 items-center">
           <div className="space-y-6 flex-1">
             <h1 className="text-4xl sm:text-6xl font-bold text-neutral-800 dark:text-neutral-200">
-              Master medical terminology by body system
+              Master medical terminology for healthcare professionals
             </h1>
             <h3 className="text-xl sm:text-2xl font-medium text-neutral-600 dark:text-neutral-400">
-              Interactive learning for healthcare students and professionals
+              Interactive learning platform designed for medical students, nurses, and healthcare practitioners
             </h3>
             <div className="flex gap-x-4">
-              <Link href="/sign-up">
+              <Link href="/get-started">
                 <Button>
                   Get Started
                   <Sparkles className="w-4 h-4 ml-2 fill-white" />
@@ -49,7 +49,7 @@ const MarketingPage = () => {
               </Link>
               <Link href="/courses">
                 <Button variant="secondary">
-                  Explore Body Systems
+                  Explore Medical Systems
                 </Button>
               </Link>
             </div>
