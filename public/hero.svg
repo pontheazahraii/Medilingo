@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="424" height="424" viewBox="0 0 424 424" fill="none">
+  <circle cx="212" cy="212" r="212" fill="#E6F4FB"/>
+  <rect x="112" y="112" width="200" height="240" rx="20" fill="white" stroke="#4BB4E6" stroke-width="4"/>
+  <path d="M162 142H262" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M142 172H282" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M142 202H252" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M192 232H282" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M212 262H252" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M172 262H192" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <rect x="142" y="232" width="40" height="40" rx="8" fill="#4BB4E6"/>
+  <path d="M162 242V262M152 252H172" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M212 292H262" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <path d="M142 292H192" stroke="#4BB4E6" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="312" cy="112" r="40" fill="#FF9F40"/>
+  <path d="M302 112H322M312 102V122" stroke="white" stroke-width="6" stroke-linecap="round"/>
+</svg>
