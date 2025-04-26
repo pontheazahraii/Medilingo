@@ -1,0 +1,55 @@
+import type { Metadata } from "next";
+
+export const siteConfig: Metadata = {
+  title: "Medilingo",
+  description:
+    "Interactive platform for medical terminology learning with lessons, quizzes, and progress tracking.",
+  keywords: [
+    "reactjs",
+    "nextjs",
+    "vercel",
+    "react",
+    "medical-education",
+    "healthcare",
+    "medicine",
+    "learn-medical-terms",
+    "anatomy",
+    "pharmacology",
+    "shadcn",
+    "shadcn-ui",
+    "radix-ui",
+    "cn",
+    "clsx",
+    "medilingo",
+    "postgresql",
+    "sonner",
+    "drizzle",
+    "zustand",
+    "mysql",
+    "lucide-react",
+    "next-themes",
+    "clerk-themes",
+    "clerk",
+    "postcss",
+    "prettier",
+    "react-dom",
+    "tailwindcss",
+    "tailwindcss-animate",
+    "ui/ux",
+    "js",
+    "javascript",
+    "typescript",
+    "eslint",
+    "html",
+    "css",
+  ] as Array<string>,
+  authors: {
+    name: "Medilingo Team",
+    url: "https://github.com/pontheazahraii/Medilingo",
+  },
+} as const;
+
+export const links = {
+  sourceCode: "https://github.com/pontheazahraii/Medilingo",
+  email: "sanidhya.verma12345@gmail.com",
+} as const;
