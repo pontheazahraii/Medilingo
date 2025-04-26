@@ -1,40 +1,44 @@
 // This is a mock database service for local development without a real database
-import { courses, units, lessons, challenges, challengeOptions, userProgress } from "./schema";
+import { medicalCategories, subcategories, learningModules, challenges, challengeOptions, userProgress } from "./schema";
 
 // Mock data
-const mockCourses = [
+const mockMedicalCategories = [
   {
     id: 1,
     title: "Cardiovascular",
     imageSrc: "/cardio-icon.svg",
+    description: "Learn about the heart and circulatory system",
   },
   {
     id: 2,
     title: "Respiratory",
     imageSrc: "/respiratory-icon.svg",
+    description: "Study the lungs and breathing system",
   },
   {
     id: 3,
     title: "Neurological",
     imageSrc: "/neuro-icon.svg",
+    description: "Explore the brain and nervous system",
   },
 ];
 
-const mockUnits = [
+const mockSubcategories = [
   {
     id: 1,
-    courseId: 1,
+    categoryId: 1,
     title: "Basic Cardiac Anatomy",
     description: "Learn the structure of the heart and blood vessels",
     order: 1,
   },
 ];
 
-const mockLessons = [
+const mockLearningModules = [
   {
     id: 1,
-    unitId: 1,
+    subcategoryId: 1,
     title: "Heart Structures",
+    moduleType: "quiz",
     order: 1,
   },
 ];
@@ -42,7 +46,7 @@ const mockLessons = [
 const mockChallenges = [
   {
     id: 1,
-    lessonId: 1,
+    moduleId: 1,
     type: "SELECT",
     question: "Which chamber receives oxygenated blood from the lungs?",
     order: 1,
@@ -79,17 +83,17 @@ const mockChallengeOptions = [
 // Mock query functions
 const mockDb = {
   query: {
-    courses: {
-      findMany: async () => mockCourses,
-      findFirst: async () => mockCourses[0],
+    medicalCategories: {
+      findMany: async () => mockMedicalCategories,
+      findFirst: async () => mockMedicalCategories[0],
     },
-    units: {
-      findMany: async () => mockUnits,
-      findFirst: async () => mockUnits[0],
+    subcategories: {
+      findMany: async () => mockSubcategories,
+      findFirst: async () => mockSubcategories[0],
     },
-    lessons: {
-      findMany: async () => mockLessons,
-      findFirst: async () => mockLessons[0],
+    learningModules: {
+      findMany: async () => mockLearningModules,
+      findFirst: async () => mockLearningModules[0],
     },
     challenges: {
       findMany: async () => mockChallenges,
@@ -102,9 +106,11 @@ const mockDb = {
     userProgress: {
       findFirst: async () => ({
         userId: "mock-user",
-        activeCourseId: 1,
+        activeCategoryId: 1,
         hearts: 5,
         points: 100,
+        level: "Student",
+        streak: 0,
       }),
     },
   },

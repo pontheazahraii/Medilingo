@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HeartPulse } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -11,7 +12,7 @@ export const Quests = ({ points }: QuestsProps) => {
   return (
     <div className="space-y-4 rounded-xl border-2 p-4">
       <div className="flex w-full items-center justify-between space-y-2">
-        <h3 className="text-lg font-bold">Quests</h3>
+        <h3 className="text-lg font-bold">Daily Challenges</h3>
 
         <Link href="/quests">
           <Button size="sm" variant="primaryOutline">
@@ -29,7 +30,9 @@ export const Quests = ({ points }: QuestsProps) => {
               className="flex w-full items-center gap-x-3 pb-4"
               key={quest.title}
             >
-              <Image src="/points.svg" alt="Points" width={40} height={40} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+                <HeartPulse className="h-6 w-6 text-blue-500" />
+              </div>
 
               <div className="flex w-full flex-col gap-y-2">
                 <p className="text-sm font-bold text-neutral-700">

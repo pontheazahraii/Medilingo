@@ -2,22 +2,22 @@ import { getCourses, getUserProgress } from "@/db/queries";
 
 import { List } from "./list";
 
-const CoursesPage = async () => {
-  const coursesData = getCourses();
+const MedicalCategoriesPage = async () => {
+  const categoriesData = getCourses();
   const userProgressData = getUserProgress();
 
-  const [courses, userProgress] = await Promise.all([
-    coursesData,
+  const [categories, userProgress] = await Promise.all([
+    categoriesData,
     userProgressData,
   ]);
 
   return (
     <div className="mx-auto h-full max-w-[912px] px-3">
-      <h1 className="text-2xl font-bold text-neutral-700">Language Courses</h1>
+      <h1 className="text-2xl font-bold text-neutral-700">Medical Topics</h1>
 
-      <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
+      <List categories={categories} activeCategoryId={userProgress?.activeCategoryId} />
     </div>
   );
 };
 
-export default CoursesPage;
+export default MedicalCategoriesPage;

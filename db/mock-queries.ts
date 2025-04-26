@@ -3,21 +3,24 @@ import { cache } from "react";
 import { mockUser } from "@/lib/mock-auth";
 
 // Mock data with medical body systems theme
-const mockCourses = [
+const mockMedicalCategories = [
   {
     id: 1,
     title: "Cardiovascular",
     imageSrc: "/cardio-icon.svg",
+    description: "Learn about the heart and circulatory system",
   },
   {
     id: 2,
     title: "Respiratory",
     imageSrc: "/respiratory-icon.svg",
+    description: "Study the lungs and breathing system",
   },
   {
     id: 3,
     title: "Neurological",
     imageSrc: "/neuro-icon.svg",
+    description: "Explore the brain and nervous system",
   },
 ];
 
@@ -25,30 +28,33 @@ const mockUserProgress = {
   userId: mockUser.id,
   userName: `${mockUser.firstName} ${mockUser.lastName}`,
   userImageSrc: mockUser.imageUrl,
-  activeCourseId: 1,
+  activeCategoryId: 1,
   hearts: 5,
   points: 100,
-  activeCourse: mockCourses[0],
+  level: "Student",
+  streak: 3,
+  activeCategory: mockMedicalCategories[0],
 };
 
-const mockUnits = [
+const mockSubcategories = [
   {
     id: 1,
-    courseId: 1,
+    categoryId: 1,
     title: "Cardiac Anatomy", 
     description: "Learn the structures of the heart",
     order: 1,
-    lessons: [
+    learningModules: [
       {
         id: 1,
-        unitId: 1,
+        subcategoryId: 1,
         title: "Heart Chambers",
         order: 1,
+        moduleType: "quiz",
         completed: false,
         challenges: [
           {
             id: 1,
-            lessonId: 1,
+            moduleId: 1,
             type: "SELECT",
             question: "Which chamber receives oxygenated blood from the lungs?",
             order: 1,
@@ -83,7 +89,7 @@ const mockUnits = [
           },
           {
             id: 2,
-            lessonId: 1,
+            moduleId: 1,
             type: "SELECT",
             question: "Which vessel carries blood away from the heart to the body?",
             order: 2,
@@ -122,7 +128,7 @@ const mockUnits = [
   },
 ];
 
-const mockLessons = mockUnits.flatMap(unit => unit.lessons);
+const mockLearningModules = mockSubcategories.flatMap(subcategory => subcategory.learningModules);
 
 const mockSubscription = {
   userId: mockUser.id,
@@ -135,7 +141,7 @@ const mockSubscription = {
 
 // Mock implementations of all queries
 export const getCourses = cache(async () => {
-  return mockCourses;
+  return mockMedicalCategories;
 });
 
 export const getUserProgress = cache(async () => {
@@ -143,36 +149,36 @@ export const getUserProgress = cache(async () => {
 });
 
 export const getUnits = cache(async () => {
-  return mockUnits;
+  return mockSubcategories;
 });
 
-export const getCourseById = cache(async (courseId: number) => {
-  const course = mockCourses.find(c => c.id === courseId);
-  if (!course) return null;
+export const getCourseById = cache(async (categoryId: number) => {
+  const category = mockMedicalCategories.find(c => c.id === categoryId);
+  if (!category) return null;
   
   return {
-    ...course,
-    units: mockUnits.filter(u => u.courseId === courseId),
+    ...category,
+    subcategories: mockSubcategories.filter(s => s.categoryId === categoryId),
   };
 });
 
 export const getCourseProgress = cache(async () => {
-  const firstLesson = mockLessons[0];
+  const firstModule = mockLearningModules[0];
   
   return {
-    activeLesson: firstLesson,
-    activeLessonId: firstLesson?.id,
+    activeModule: firstModule,
+    activeModuleId: firstModule?.id,
   };
 });
 
 export const getLesson = cache(async (id?: number) => {
-  const lessonId = id || mockLessons[0]?.id;
-  if (!lessonId) return null;
+  const moduleId = id || mockLearningModules[0]?.id;
+  if (!moduleId) return null;
   
-  const lesson = mockLessons.find(l => l.id === lessonId);
-  if (!lesson) return null;
+  const module = mockLearningModules.find(m => m.id === moduleId);
+  if (!module) return null;
   
-  return lesson;
+  return module;
 });
 
 export const getLessonPercentage = cache(async () => {

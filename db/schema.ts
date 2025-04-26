@@ -11,62 +11,64 @@ import {
 
 import { MAX_HEARTS } from "@/constants";
 
-export const courses = pgTable("courses", {
+export const medicalCategories = pgTable("medical_categories", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   imageSrc: text("image_src").notNull(),
+  description: text("description").notNull(),
 });
 
-export const coursesRelations = relations(courses, ({ many }) => ({
+export const medicalCategoriesRelations = relations(medicalCategories, ({ many }) => ({
   userProgress: many(userProgress),
-  units: many(units),
+  subcategories: many(subcategories),
 }));
 
-export const units = pgTable("units", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(), // Unit 1
-  description: text("description").notNull(), // Learn the basics of spanish
-  courseId: integer("course_id")
-    .references(() => courses.id, {
-      onDelete: "cascade",
-    })
-    .notNull(),
-  order: integer("order").notNull(),
-});
-
-export const unitsRelations = relations(units, ({ many, one }) => ({
-  course: one(courses, {
-    fields: [units.courseId],
-    references: [courses.id],
-  }),
-  lessons: many(lessons),
-}));
-
-export const lessons = pgTable("lessons", {
+export const subcategories = pgTable("subcategories", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
-  unitId: integer("unit_id")
-    .references(() => units.id, {
+  description: text("description").notNull(),
+  categoryId: integer("category_id")
+    .references(() => medicalCategories.id, {
       onDelete: "cascade",
     })
     .notNull(),
   order: integer("order").notNull(),
 });
 
-export const lessonsRelations = relations(lessons, ({ one, many }) => ({
-  unit: one(units, {
-    fields: [lessons.unitId],
-    references: [units.id],
+export const subcategoriesRelations = relations(subcategories, ({ many, one }) => ({
+  category: one(medicalCategories, {
+    fields: [subcategories.categoryId],
+    references: [medicalCategories.id],
+  }),
+  learningModules: many(learningModules),
+}));
+
+export const learningModules = pgTable("learning_modules", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  subcategoryId: integer("subcategory_id")
+    .references(() => subcategories.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  moduleType: text("module_type").notNull(),
+  order: integer("order").notNull(),
+});
+
+export const learningModulesRelations = relations(learningModules, ({ one, many }) => ({
+  subcategory: one(subcategories, {
+    fields: [learningModules.subcategoryId],
+    references: [subcategories.id],
   }),
   challenges: many(challenges),
 }));
 
-export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
+export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST", "MATCH", "TRUE_FALSE"]);
 
 export const challenges = pgTable("challenges", {
   id: serial("id").primaryKey(),
-  lessonId: integer("lesson_id")
-    .references(() => lessons.id, {
+  moduleId: integer("module_id")
+    .references(() => learningModules.id, {
       onDelete: "cascade",
     })
     .notNull(),
@@ -76,9 +78,9 @@ export const challenges = pgTable("challenges", {
 });
 
 export const challengesRelations = relations(challenges, ({ one, many }) => ({
-  lesson: one(lessons, {
-    fields: [challenges.lessonId],
-    references: [lessons.id],
+  learningModule: one(learningModules, {
+    fields: [challenges.moduleId],
+    references: [learningModules.id],
   }),
   challengeOptions: many(challengeOptions),
   challengeProgress: many(challengeProgress),
@@ -132,17 +134,19 @@ export const userProgress = pgTable("user_progress", {
   userId: text("user_id").primaryKey(),
   userName: text("user_name").notNull().default("User"),
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
-  activeCourseId: integer("active_course_id").references(() => courses.id, {
+  activeCategoryId: integer("active_category_id").references(() => medicalCategories.id, {
     onDelete: "cascade",
   }),
   hearts: integer("hearts").notNull().default(MAX_HEARTS),
   points: integer("points").notNull().default(0),
+  level: text("level").notNull().default("Student"),
+  streak: integer("streak").notNull().default(0),
 });
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({
-  activeCourse: one(courses, {
-    fields: [userProgress.activeCourseId],
-    references: [courses.id],
+  activeCategory: one(medicalCategories, {
+    fields: [userProgress.activeCategoryId],
+    references: [medicalCategories.id],
   }),
 }));
 
@@ -153,4 +157,20 @@ export const userSubscription = pgTable("user_subscription", {
   stripeSubscriptionId: text("stripe_subscription_id").notNull().unique(),
   stripePriceId: text("stripe_price_id").notNull(),
   stripeCurrentPeriodEnd: timestamp("stripe_current_period_end").notNull(),
+});
+
+export const userBadges = pgTable("user_badges", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  badgeId: integer("badge_id").notNull(),
+  earnedAt: timestamp("earned_at").notNull(),
+});
+
+export const badges = pgTable("badges", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  imageSrc: text("image_src").notNull(),
+  requirement: text("requirement").notNull(),
+  requirementValue: integer("requirement_value").notNull(),
 });

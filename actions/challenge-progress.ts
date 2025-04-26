@@ -25,7 +25,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
   if (!challenge) throw new Error("Challenge not found.");
 
-  const lessonId = challenge.lessonId;
+  const moduleId = challenge.moduleId;
 
   const existingChallengeProgress = await db.query.challengeProgress.findFirst({
     where: and(
@@ -63,7 +63,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     revalidatePath("/lesson");
     revalidatePath("/quests");
     revalidatePath("/leaderboard");
-    revalidatePath(`/lesson/${lessonId}`);
+    revalidatePath(`/lesson/${moduleId}`);
     return;
   }
 
@@ -84,5 +84,5 @@ export const upsertChallengeProgress = async (challengeId: number) => {
   revalidatePath("/lesson");
   revalidatePath("/quests");
   revalidatePath("/leaderboard");
-  revalidatePath(`/lesson/${lessonId}`);
+  revalidatePath(`/lesson/${moduleId}`);
 };

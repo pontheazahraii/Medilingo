@@ -14,18 +14,18 @@ import {
 } from "@/db/queries";
 import { challengeProgress, challenges, userProgress } from "@/db/schema";
 
-export const upsertUserProgress = async (courseId: number) => {
+export const upsertUserProgress = async (categoryId: number) => {
   const { userId } = auth();
   const user = await currentUser();
 
   if (!userId || !user) throw new Error("Unauthorized.");
 
-  const course = await getCourseById(courseId);
+  const category = await getCourseById(categoryId);
 
-  if (!course) throw new Error("Course not found.");
+  if (!category) throw new Error("Medical category not found.");
 
-  if (!course.units.length || !course.units[0].lessons.length)
-    throw new Error("Course is empty.");
+  if (!category.subcategories.length || !category.subcategories[0].learningModules.length)
+    throw new Error("Medical category is empty.");
 
   const existingUserProgress = await getUserProgress();
 
@@ -33,7 +33,7 @@ export const upsertUserProgress = async (courseId: number) => {
     await db
       .update(userProgress)
       .set({
-        activeCourseId: courseId,
+        activeCategoryId: categoryId,
         userName: user.firstName || "User",
         userImageSrc: user.imageUrl || "/mascot.svg",
       })
@@ -46,7 +46,7 @@ export const upsertUserProgress = async (courseId: number) => {
 
   await db.insert(userProgress).values({
     userId,
-    activeCourseId: courseId,
+    activeCategoryId: categoryId,
     userName: user.firstName || "User",
     userImageSrc: user.imageUrl || "/mascot.svg",
   });
@@ -70,7 +70,7 @@ export const reduceHearts = async (challengeId: number) => {
 
   if (!challenge) throw new Error("Challenge not found.");
 
-  const lessonId = challenge.lessonId;
+  const moduleId = challenge.moduleId;
 
   const existingChallengeProgress = await db.query.challengeProgress.findFirst({
     where: and(
@@ -100,7 +100,7 @@ export const reduceHearts = async (challengeId: number) => {
   revalidatePath("/learn");
   revalidatePath("/quests");
   revalidatePath("/leaderboard");
-  revalidatePath(`/lesson/${lessonId}`);
+  revalidatePath(`/lesson/${moduleId}`);
 };
 
 export const refillHearts = async () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Crown, Star } from "lucide-react";
+import { Check, Crown, Star, BookOpen, Brain, Gamepad2 } from "lucide-react";
 import Link from "next/link";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
@@ -9,23 +9,25 @@ import { cn } from "@/lib/utils";
 
 import "react-circular-progressbar/dist/styles.css";
 
-type LessonButtonProps = {
+type ModuleButtonProps = {
   id: number;
   index: number;
   totalCount: number;
   locked?: boolean;
   current?: boolean;
   percentage: number;
+  moduleType: string;
 };
 
-export const LessonButton = ({
+export const ModuleButton = ({
   id,
   index,
   totalCount,
   locked,
   current,
   percentage,
-}: LessonButtonProps) => {
+  moduleType,
+}: ModuleButtonProps) => {
   const cycleLength = 8;
   const cycleIndex = index % cycleLength;
 
@@ -42,7 +44,28 @@ export const LessonButton = ({
   const isLast = index === totalCount;
   const isCompleted = !current && !locked;
 
-  const Icon = isCompleted ? Check : isLast ? Crown : Star;
+  // Choose icon based on module type
+  let Icon;
+  if (isCompleted) {
+    Icon = Check;
+  } else if (isLast) {
+    Icon = Crown;
+  } else {
+    // Select icon based on module type
+    switch (moduleType) {
+      case 'flashcard':
+        Icon = BookOpen;
+        break;
+      case 'quiz':
+        Icon = Brain;
+        break;
+      case 'mini-game':
+        Icon = Gamepad2;
+        break;
+      default:
+        Icon = Star;
+    }
+  }
 
   const href = isCompleted ? `/lesson/${id}` : "/lesson";
 

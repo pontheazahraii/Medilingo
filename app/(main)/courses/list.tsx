@@ -6,23 +6,23 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { upsertUserProgress } from "@/actions/user-progress";
-import { courses, userProgress } from "@/db/schema";
+import { medicalCategories, userProgress } from "@/db/schema";
 
 import { Card } from "./card";
 
 type ListProps = {
-  courses: (typeof courses.$inferSelect)[];
-  activeCourseId?: typeof userProgress.$inferSelect.activeCourseId;
+  categories: (typeof medicalCategories.$inferSelect)[];
+  activeCategoryId?: typeof userProgress.$inferSelect.activeCategoryId;
 };
 
-export const List = ({ courses, activeCourseId }: ListProps) => {
+export const List = ({ categories, activeCategoryId }: ListProps) => {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
   const onClick = (id: number) => {
     if (pending) return;
 
-    if (id === activeCourseId) return router.push("/learn");
+    if (id === activeCategoryId) return router.push("/learn");
 
     startTransition(() => {
       upsertUserProgress(id).catch(() => toast.error("Something went wrong."));
@@ -31,15 +31,16 @@ export const List = ({ courses, activeCourseId }: ListProps) => {
 
   return (
     <div className="grid grid-cols-2 gap-4 pt-6 lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]">
-      {courses.map((course) => (
+      {categories.map((category) => (
         <Card
-          key={course.id}
-          id={course.id}
-          title={course.title}
-          imageSrc={course.imageSrc}
+          key={category.id}
+          id={category.id}
+          title={category.title}
+          imageSrc={category.imageSrc}
+          description={category.description}
           onClick={onClick}
           disabled={pending}
-          isActive={course.id === activeCourseId}
+          isActive={category.id === activeCategoryId}
         />
       ))}
     </div>

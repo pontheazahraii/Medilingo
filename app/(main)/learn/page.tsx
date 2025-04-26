@@ -14,30 +14,30 @@ import {
 } from "@/db/queries";
 
 import { Header } from "./header";
-import { Unit } from "./unit";
+import { Subcategory } from "./unit";
 
-const LearnPage = async () => {
+const MedicalLearningPage = async () => {
   const userProgressData = getUserProgress();
-  const courseProgressData = getCourseProgress();
-  const lessonPercentageData = getLessonPercentage();
-  const unitsData = getUnits();
+  const categoryProgressData = getCourseProgress();
+  const modulePercentageData = getLessonPercentage();
+  const subcategoriesData = getUnits();
   const userSubscriptionData = getUserSubscription();
 
   const [
     userProgress,
-    units,
-    courseProgress,
-    lessonPercentage,
+    subcategories,
+    categoryProgress,
+    modulePercentage,
     userSubscription,
   ] = await Promise.all([
     userProgressData,
-    unitsData,
-    courseProgressData,
-    lessonPercentageData,
+    subcategoriesData,
+    categoryProgressData,
+    modulePercentageData,
     userSubscriptionData,
   ]);
 
-  if (!courseProgress || !userProgress || !userProgress.activeCourse)
+  if (!categoryProgress || !userProgress || !userProgress.activeCategory)
     redirect("/courses");
 
   const isPro = !!userSubscription?.isActive;
@@ -46,9 +46,10 @@ const LearnPage = async () => {
     <div className="flex flex-row-reverse gap-[48px] px-6">
       <StickyWrapper>
         <UserProgress
-          activeCourse={userProgress.activeCourse}
+          activeCategory={userProgress.activeCategory}
           hearts={userProgress.hearts}
           points={userProgress.points}
+          level={userProgress.level}
           hasActiveSubscription={isPro}
         />
 
@@ -56,17 +57,17 @@ const LearnPage = async () => {
         <Quests points={userProgress.points} />
       </StickyWrapper>
       <FeedWrapper>
-        <Header title={userProgress.activeCourse.title} />
-        {units.map((unit) => (
-          <div key={unit.id} className="mb-10">
-            <Unit
-              id={unit.id}
-              order={unit.order}
-              description={unit.description}
-              title={unit.title}
-              lessons={unit.lessons}
-              activeLesson={courseProgress.activeLesson}
-              activeLessonPercentage={lessonPercentage}
+        <Header title={userProgress.activeCategory.title} />
+        {subcategories.map((subcategory) => (
+          <div key={subcategory.id} className="mb-10">
+            <Subcategory
+              id={subcategory.id}
+              order={subcategory.order}
+              description={subcategory.description}
+              title={subcategory.title}
+              modules={subcategory.modules}
+              activeModule={categoryProgress.activeModule}
+              activeModulePercentage={modulePercentage}
             />
           </div>
         ))}
@@ -75,4 +76,4 @@ const LearnPage = async () => {
   );
 };
 
-export default LearnPage;
+export default MedicalLearningPage;

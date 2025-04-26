@@ -1,49 +1,50 @@
-import { lessons, units } from "@/db/schema";
+import { learningModules, subcategories } from "@/db/schema";
 
-import { LessonButton } from "./lesson-button";
-import { UnitBanner } from "./unit-banner";
+import { ModuleButton } from "./lesson-button";
+import { SubcategoryBanner } from "./unit-banner";
 
-type UnitProps = {
+type SubcategoryProps = {
   id: number;
   order: number;
   title: string;
   description: string;
-  lessons: (typeof lessons.$inferSelect & {
+  modules: (typeof learningModules.$inferSelect & {
     completed: boolean;
   })[];
-  activeLesson:
-    | (typeof lessons.$inferSelect & {
-        unit: typeof units.$inferSelect;
+  activeModule:
+    | (typeof learningModules.$inferSelect & {
+        subcategory: typeof subcategories.$inferSelect;
       })
     | undefined;
-  activeLessonPercentage: number;
+  activeModulePercentage: number;
 };
 
-export const Unit = ({
+export const Subcategory = ({
   title,
   description,
-  lessons,
-  activeLesson,
-  activeLessonPercentage,
-}: UnitProps) => {
+  modules,
+  activeModule,
+  activeModulePercentage,
+}: SubcategoryProps) => {
   return (
     <>
-      <UnitBanner title={title} description={description} />
+      <SubcategoryBanner title={title} description={description} />
 
       <div className="relative flex flex-col items-center">
-        {lessons.map((lesson, i) => {
-          const isCurrent = lesson.id === activeLesson?.id;
-          const isLocked = !lesson.completed && !isCurrent;
+        {modules.map((module, i) => {
+          const isCurrent = module.id === activeModule?.id;
+          const isLocked = !module.completed && !isCurrent;
 
           return (
-            <LessonButton
-              key={lesson.id}
-              id={lesson.id}
+            <ModuleButton
+              key={module.id}
+              id={module.id}
               index={i}
-              totalCount={lessons.length - 1}
+              totalCount={modules.length - 1}
               current={isCurrent}
               locked={isLocked}
-              percentage={activeLessonPercentage}
+              percentage={activeModulePercentage}
+              moduleType={module.moduleType}
             />
           );
         })}
