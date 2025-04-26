@@ -15,6 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { LogoutButton } from "@/components/logout-button";
 import { links } from "@/config";
 import { cn } from "@/lib/utils";
 
@@ -49,7 +50,12 @@ export const Header = () => {
             </ClerkLoading>
             <ClerkLoaded>
               <SignedIn>
-                <UserButton afterSignOutUrl="/" />
+                <div className="flex items-center gap-x-3">
+                  <UserButton afterSignOutUrl="/" />
+                  <div className="hidden sm:block">
+                    <LogoutButton compact />
+                  </div>
+                </div>
               </SignedIn>
 
               <SignedOut>

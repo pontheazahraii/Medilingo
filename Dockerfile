@@ -9,7 +9,6 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-RUN npm install next-auth
 
 # Copy the rest of your app files
 COPY . .
