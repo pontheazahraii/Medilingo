@@ -38,11 +38,6 @@ CREATE TABLE "questions" (
   "option_6" integer
 );
 
-CREATE TABLE "answers" (
-  "id" integer PRIMARY KEY,
-  "answer" text
-);
-
 CREATE TABLE "user_progress" (
   "id" integer PRIMARY KEY,
   "user_id" integer,
