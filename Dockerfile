@@ -6,7 +6,7 @@ FROM node:18
 WORKDIR /app
 
 # Copy package.json and package-lock.json first (for caching npm install)
-COPY package-lock.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
