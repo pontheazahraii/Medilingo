@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth} from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
 
 const MarketingPage = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn = false, signOut} = useAuth() || {};
+  // const { signOut } = useSignOut();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
@@ -25,11 +26,16 @@ const MarketingPage = () => {
             </Link>
           )}
           {isSignedIn ? (
-            <Link href="/learn">
-              <Button size="sm">
-                Continue Learning
+            <>
+              <Link href="/learn">
+                <Button size="sm">
+                  Continue Learning
+                </Button>
+              </Link>
+              <Button size="sm" variant="danger" onClick={() => signOut()}>
+                Logout
               </Button>
-            </Link>
+          </>
           ) : (
             <Link href="/sign-up">
               <Button size="sm">
