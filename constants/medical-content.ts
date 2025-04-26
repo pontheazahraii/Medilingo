@@ -32,187 +32,79 @@ export type MedicalMatchingPair = {
 export const MEDICAL_CATEGORIES = [
   {
     id: 1,
-    title: "Anatomy",
+    title: "Skeletal System Flashcards",
     imageSrc: "/anatomy-icon.svg",
-    description: "Explore the structure of the human body",
-    subcategories: ["Cardiovascular", "Musculoskeletal", "Neuroanatomy"]
+    description: "Study the human bones and structure",
+    subcategories: []
   },
   {
     id: 2,
-    title: "Physiology",
+    title: "Muscular System Flashcards",
     imageSrc: "/physiology-icon.svg",
-    description: "Study how the body's systems function",
-    subcategories: ["Endocrine System", "Renal Physiology", "Respiratory Physiology"]
+    description: "Study the body's muscles and movement",
+    subcategories: []
   },
   {
     id: 3,
-    title: "Pharmacology",
+    title: "Circulatory System Flashcards",
     imageSrc: "/pharma-icon.svg",
-    description: "Learn about drugs and their effects on the body",
-    subcategories: ["Antibiotics", "Antihypertensives", "Anesthetics"]
+    description: "Explore the blood flow and the heart",
+    subcategories: []
   },
   {
     id: 4,
-    title: "Pathology",
+    title: "Digestive System Flashcardsogy",
     imageSrc: "/pathology-icon.svg",
-    description: "Study diseases and their effects",
-    subcategories: ["Cancer Types", "Infectious Diseases", "Genetic Disorders"]
+    description: "Study digestion and metabolism",
+    subcategories: []
   },
   {
     id: 5,
-    title: "Medical Terminology",
+    title: "Respiratory System Flashcards",
     imageSrc: "/terminology-icon.svg",
-    description: "Master the language of medicine",
-    subcategories: ["Prefixes/Suffixes", "Latin/Greek Root Words"]
+    description: "Learn about breathing and lungs",
+    subcategories: []
   },
   {
     id: 6,
-    title: "Clinical Procedures",
+    title: "Nervous System Flashcards",
     imageSrc: "/procedures-icon.svg",
-    description: "Learn essential clinical skills",
-    subcategories: ["IV Insertion", "Basic Suturing", "CPR Protocols"]
+    description: "Study the nervous system and brain",
+    subcategories: []
   },
   {
     id: 7,
-    title: "Patient Communication",
+    title: "Multiple Choice Practice",
     imageSrc: "/communication-icon.svg",
-    description: "Develop effective provider-patient interaction skills",
-    subcategories: ["Informed Consent", "Bad News Delivery (SPIKES protocol)"]
+    description: "Practice all 6 systems in a multiple choice format",
+    subcategories: []
   },
   {
     id: 8,
-    title: "Health Literacy",
+    title: "Fill In The Blank Practice",
     imageSrc: "/literacy-icon.svg",
-    description: "Help patients understand medical information",
-    subcategories: ["Reading Prescriptions", "Insurance Terms"]
+    description: "Practice all 6 systems in a fill in the black format",
+    subcategories: []
   },
   {
     id: 9,
-    title: "Emergency Medicine",
+    title: "Diagram Practice",
     imageSrc: "/emergency-icon.svg",
-    description: "Learn critical emergency care principles",
-    subcategories: ["Trauma Assessment", "Triage Principles"]
+    description: "Practice identifying parts of all 6 body systems on diagrams",
+    subcategories: []
   }
 ];
 
-// Sample flashcards for Anatomy - Cardiovascular subcategory
-export const CARDIOVASCULAR_FLASHCARDS: MedicalFlashcard[] = [
-  {
-    id: 1,
-    term: "Myocardium",
-    definition: "The middle and thickest layer of the heart wall composed of cardiac muscle",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 2,
-    term: "Endocardium",
-    definition: "The innermost layer of tissue that lines the chambers of the heart",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 3,
-    term: "Epicardium",
-    definition: "The outer layer of the heart wall, also known as the visceral pericardium",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 4,
-    term: "Interventricular Septum",
-    definition: "The wall separating the right and left ventricles of the heart",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 5,
-    term: "Mitral Valve",
-    definition: "A bicuspid valve between the left atrium and left ventricle of the heart",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  }
+export const SKELETAL_FLASHCARDS: MedicalFlashcard[] = [ /* terms from Skeletal system */ ];
+export const MUSCULAR_FLASHCARDS: MedicalFlashcard[] = [ /* terms from Muscular system */ ];
+export const CIRCULATORY_FLASHCARDS: MedicalFlashcard[] = [ /* terms from Circulatory system */ ];
+export const DIGESTIVE_FLASHCARDS: MedicalFlashcard[] = [ /* terms from Digestive system */ ];
+export const RESPIRATORY_FLASHCARDS: MedicalFlashcard[] = [ /* terms from Respiratory system */ ];
+export const NERVOUS_FLASHCARDS: MedicalFlashcard[] = [ /* terms from Nervous system */ ];
+export const MULTIPLE_CHOICE_QUESTIONS: MedicalQuizQuestion[] = [
+  // Will populate from your Questions_Data.csv later
 ];
 
-// Sample matching pairs for Pharmacology - Antibiotics subcategory
-export const ANTIBIOTICS_MATCHING_PAIRS: MedicalMatchingPair[] = [
-  {
-    id: 1,
-    term: "Penicillin",
-    definition: "Beta-lactam antibiotic that inhibits cell wall synthesis",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 2,
-    term: "Ciprofloxacin",
-    definition: "Fluoroquinolone antibiotic that inhibits bacterial DNA gyrase",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 3,
-    term: "Tetracycline",
-    definition: "Inhibits bacterial protein synthesis by binding to the 30S ribosomal subunit",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 4,
-    term: "Vancomycin",
-    definition: "Glycopeptide antibiotic used to treat serious Gram-positive infections",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 5,
-    term: "Azithromycin",
-    definition: "Macrolide antibiotic that binds to the 50S ribosomal subunit",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  }
+export const FILL_IN_THE_BLANK_QUESTIONS: MedicalQuizQuestion[] = [
+  // Will populate from your Questions_Data.csv later
 ];
-
-// Sample quiz questions for Medical Terminology - Prefixes/Suffixes subcategory
-export const MEDICAL_TERMINOLOGY_QUIZ: MedicalQuizQuestion[] = [
-  {
-    id: 1,
-    question: "What does the prefix 'brady-' mean?",
-    options: ["Slow", "Fast", "Difficult", "Painful"],
-    correctOptionIndex: 0,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 2,
-    question: "What does the suffix '-ectomy' indicate?",
-    options: ["Inflammation", "Surgical removal", "Record or image", "Flow or discharge"],
-    correctOptionIndex: 1,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 3,
-    question: "The prefix 'hyper-' means:",
-    options: ["Below", "Within", "Above normal", "Beside"],
-    correctOptionIndex: 2,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 4,
-    question: "The suffix '-itis' refers to:",
-    options: ["Disease", "Inflammation", "Condition", "Process"],
-    correctOptionIndex: 1,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 5,
-    question: "What does the prefix 'dys-' indicate?",
-    options: ["Double", "Abnormal/difficult", "Away from", "Through"],
-    correctOptionIndex: 1,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  }
-]; 

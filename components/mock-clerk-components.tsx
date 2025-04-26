@@ -69,3 +69,6 @@ export function MockClerkLoading({ children }: { children: React.ReactNode }) {
 export function MockClerkLoaded({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 } 
+
+export const ClerkDevErrorBubble = () => null;
+export const ClerkErrorBoundary = ({ children }: { children: React.ReactNode }) => <>{children}</>;
