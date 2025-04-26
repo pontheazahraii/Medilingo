@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 import { upsertUserProgress } from "@/actions/user-progress";
 import { medicalCategories, userProgress } from "@/db/schema";
-
+import Link from "next/link"
 import { Card } from "./card";
 
 type ListProps = {
@@ -19,14 +19,26 @@ export const List = ({ categories, activeCategoryId }: ListProps) => {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
+//   const onClick = (id: number) => {
+//     if (pending) return;
+
+//     if (id === activeCategoryId) return router.push("/learn");
+
+//     startTransition(() => {
+//       upsertUserProgress(id)
+//         .then(() => {
+//           router.push(`/learn/${id}`);  // After saving progress, route to /learn/:id
+//         })
+//         .catch(() => toast.error("Something went wrong."));
+//     });
+    
+//   };
+
+
   const onClick = (id: number) => {
     if (pending) return;
-
-    if (id === activeCategoryId) return router.push("/learn");
-
-    startTransition(() => {
-      upsertUserProgress(id).catch(() => toast.error("Something went wrong."));
-    });
+  
+    router.push(`/learn/${id}`);  // Just route directly, no upsert
   };
 
   return (

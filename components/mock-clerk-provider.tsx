@@ -33,6 +33,7 @@ export const useMockClerk = () => useContext(MockClerkContext);
 interface MockClerkProviderProps {
   children: React.ReactNode;
   appearance?: any;
+  navigate?: (to:string) => void
 }
 
 export function MockClerkProvider({ children, appearance }: MockClerkProviderProps) {
@@ -64,3 +65,5 @@ export function MockClerkProvider({ children, appearance }: MockClerkProviderPro
     </MockClerkContext.Provider>
   );
 } 
+
+(MockClerkProvider as any).displayName = "ClerkProvider";

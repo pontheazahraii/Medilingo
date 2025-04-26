@@ -37,194 +37,149 @@ export type MatchingGame = {
 export const MEDICAL_CATEGORIES = [
   {
     id: 1,
-    title: "Clinical Anatomy",
+    title: "Skeletal System Flashcards",
     imageSrc: "/anatomy-icon.svg",
-    description: "Essential anatomy knowledge for healthcare practitioners",
-    subcategories: ["Cardiovascular", "Musculoskeletal", "Neuroanatomy", "Respiratory System", "Gastrointestinal"]
+    description: "Study the human bones and structure",
+    subcategories: []
   },
   {
     id: 2,
-    title: "Clinical Physiology",
+    title: "Muscular System Flashcards",
     imageSrc: "/physiology-icon.svg",
-    description: "Physiological principles for patient care",
-    subcategories: ["Endocrine Function", "Renal & Fluid Balance", "Respiratory Physiology", "Cardiovascular Function"]
+    description: "Study the body's muscles and movement",
+    subcategories: []
   },
   {
     id: 3,
-    title: "Pharmacotherapy",
+    title: "Circulatory System Flashcards",
     imageSrc: "/pharma-icon.svg",
-    description: "Medication knowledge for healthcare providers",
-    subcategories: ["Antimicrobials", "Cardiovascular Drugs", "Pain Management", "Psychiatric Medications", "Drug Interactions"]
+    description: "Explore the blood flow and the heart",
+    subcategories: []
   },
   {
     id: 4,
-    title: "Clinical Pathology",
+    title: "Digestive System Flashcardsogy",
     imageSrc: "/pathology-icon.svg",
-    description: "Disease processes and clinical manifestations",
-    subcategories: ["Oncology", "Infectious Diseases", "Genetic Disorders", "Autoimmune Conditions", "Metabolic Disorders"]
+    description: "Study digestion and metabolism",
+    subcategories: []
   },
   {
     id: 5,
-    title: "Medical Terminology",
+    title: "Respiratory System Flashcards",
     imageSrc: "/terminology-icon.svg",
-    description: "Essential terminology for healthcare documentation",
-    subcategories: ["Prefixes/Suffixes", "Latin/Greek Roots", "Abbreviations & Acronyms", "Specialty-Specific Terms"]
+    description: "Learn about breathing and lungs",
+    subcategories: []
   },
   {
     id: 6,
-    title: "Clinical Procedures",
+    title: "Nervous System Flashcards",
     imageSrc: "/procedures-icon.svg",
-    description: "Common procedures for healthcare practitioners",
-    subcategories: ["Vascular Access", "Wound Management", "Airway Management", "Diagnostic Procedures", "Surgical Asepsis"]
+    description: "Study the nervous system and brain",
+    subcategories: []
   },
   {
     id: 7,
-    title: "Patient Communication",
+    title: "Multiple Choice Practice",
     imageSrc: "/communication-icon.svg",
-    description: "Effective communication skills for healthcare",
-    subcategories: ["Informed Consent", "Breaking Bad News", "Health Literacy", "Cultural Competence", "Interprofessional Communication"]
+    description: "Practice all 6 systems in a multiple choice format",
+    subcategories: []
   },
   {
     id: 8,
-    title: "Clinical Documentation",
+    title: "Fill In The Blank Practice",
     imageSrc: "/literacy-icon.svg",
-    description: "Documentation standards for healthcare professionals",
-    subcategories: ["SOAP Notes", "Electronic Health Records", "Discharge Summaries", "Medical Coding Basics"]
+    description: "Practice all 6 systems in a fill in the black format",
+    subcategories: []
   },
   {
     id: 9,
-    title: "Emergency Medicine",
+    title: "Diagram Practice",
     imageSrc: "/emergency-icon.svg",
-    description: "Critical emergency care concepts for clinicians",
-    subcategories: ["Trauma Assessment", "Resuscitation", "Critical Care", "Disaster Management", "Triage Principles"]
-  },
-  {
-    id: 10,
-    title: "Healthcare Ethics & Law",
-    imageSrc: "/ethics-icon.svg",
-    description: "Ethical and legal foundations for healthcare practice",
-    subcategories: ["Patient Rights", "Confidentiality & HIPAA", "End-of-Life Care", "Professional Boundaries"]
+    description: "Practice identifying parts of all 6 body systems on diagrams",
+    subcategories: []
   }
 ];
 
-// Sample flashcards for Anatomy - Cardiovascular subcategory
-export const CARDIOVASCULAR_FLASHCARDS: MedicalFlashcard[] = [
-  {
-    id: 1,
-    term: "Myocardium",
-    definition: "The middle and thickest layer of the heart wall composed of cardiac muscle",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 2,
-    term: "Endocardium",
-    definition: "The innermost layer of tissue that lines the chambers of the heart",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 3,
-    term: "Epicardium",
-    definition: "The outer layer of the heart wall, also known as the visceral pericardium",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 4,
-    term: "Interventricular Septum",
-    definition: "The wall separating the right and left ventricles of the heart",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  },
-  {
-    id: 5,
-    term: "Mitral Valve",
-    definition: "A bicuspid valve between the left atrium and left ventricle of the heart",
-    category: "Anatomy",
-    subcategory: "Cardiovascular"
-  }
+// Flashcards for each system
+
+export const SKELETAL_FLASHCARDS: MedicalFlashcard[] = [
+  { id: 1, term: "Cranium", definition: "The skull that encloses the brain.", category: "Skeletal System", subcategory: "" },
+  { id: 2, term: "Clavicle", definition: "Collar bone connecting the sternum and scapula.", category: "Skeletal System", subcategory: "" },
+  { id: 3, term: "Femur", definition: "The thigh bone; the longest bone in the body.", category: "Skeletal System", subcategory: "" },
+  { id: 4, term: "Sternum", definition: "Chest bone located in the center of the rib cage.", category: "Skeletal System", subcategory: "" }
 ];
 
-// Sample matching pairs for Pharmacology - Antibiotics subcategory
-export const ANTIBIOTICS_MATCHING_PAIRS: MedicalMatchingPair[] = [
-  {
-    id: 1,
-    term: "Penicillin",
-    definition: "Beta-lactam antibiotic that inhibits cell wall synthesis",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 2,
-    term: "Ciprofloxacin",
-    definition: "Fluoroquinolone antibiotic that inhibits bacterial DNA gyrase",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 3,
-    term: "Tetracycline",
-    definition: "Inhibits bacterial protein synthesis by binding to the 30S ribosomal subunit",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 4,
-    term: "Vancomycin",
-    definition: "Glycopeptide antibiotic used to treat serious Gram-positive infections",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  },
-  {
-    id: 5,
-    term: "Azithromycin",
-    definition: "Macrolide antibiotic that binds to the 50S ribosomal subunit",
-    category: "Pharmacology",
-    subcategory: "Antibiotics"
-  }
+export const MUSCULAR_FLASHCARDS: MedicalFlashcard[] = [
+  { id: 5, term: "Biceps Brachii", definition: "Muscle of the upper arm responsible for flexing the elbow.", category: "Muscular System", subcategory: "" },
+  { id: 6, term: "Quadriceps", definition: "Group of muscles located at the front of the thigh.", category: "Muscular System", subcategory: "" },
+  { id: 7, term: "Deltoid", definition: "Shoulder muscle responsible for arm rotation.", category: "Muscular System", subcategory: "" },
+  { id: 8, term: "Gastrocnemius", definition: "Calf muscle that flexes the foot and knee.", category: "Muscular System", subcategory: "" }
 ];
 
-// Sample quiz questions for Medical Terminology - Prefixes/Suffixes subcategory
-export const MEDICAL_TERMINOLOGY_QUIZ: MedicalQuizQuestion[] = [
+export const CIRCULATORY_FLASHCARDS: MedicalFlashcard[] = [
+  { id: 9, term: "Aorta", definition: "The largest artery in the body carrying blood from the heart.", category: "Circulatory System", subcategory: "" },
+  { id: 10, term: "Vein", definition: "Blood vessel that carries blood toward the heart.", category: "Circulatory System", subcategory: "" },
+  { id: 11, term: "Capillary", definition: "Smallest blood vessels where gas exchange occurs.", category: "Circulatory System", subcategory: "" },
+  { id: 12, term: "Atrium", definition: "One of the two upper chambers of the heart.", category: "Circulatory System", subcategory: "" }
+];
+
+export const DIGESTIVE_FLASHCARDS: MedicalFlashcard[] = [
+  { id: 13, term: "Esophagus", definition: "Tube that connects the throat to the stomach.", category: "Digestive System", subcategory: "" },
+  { id: 14, term: "Small Intestine", definition: "Organ where most digestion and absorption of food occurs.", category: "Digestive System", subcategory: "" },
+  { id: 15, term: "Liver", definition: "Organ that produces bile to aid in fat digestion.", category: "Digestive System", subcategory: "" },
+  { id: 16, term: "Stomach", definition: "Organ where food is mixed with digestive juices.", category: "Digestive System", subcategory: "" }
+];
+
+export const RESPIRATORY_FLASHCARDS: MedicalFlashcard[] = [
+  { id: 17, term: "Trachea", definition: "The windpipe that carries air to the lungs.", category: "Respiratory System", subcategory: "" },
+  { id: 18, term: "Alveoli", definition: "Tiny air sacs where gas exchange occurs in the lungs.", category: "Respiratory System", subcategory: "" },
+  { id: 19, term: "Bronchi", definition: "Major air passages branching from the trachea to the lungs.", category: "Respiratory System", subcategory: "" },
+  { id: 20, term: "Diaphragm", definition: "Muscle that plays a major role in breathing.", category: "Respiratory System", subcategory: "" }
+];
+
+export const NERVOUS_FLASHCARDS: MedicalFlashcard[] = [
+  { id: 21, term: "Neuron", definition: "The basic working unit of the brain and nervous system.", category: "Nervous System", subcategory: "" },
+  { id: 22, term: "Cerebrum", definition: "Largest part of the brain responsible for voluntary activities.", category: "Nervous System", subcategory: "" },
+  { id: 23, term: "Spinal Cord", definition: "Bundle of nerves that sends signals between the brain and the body.", category: "Nervous System", subcategory: "" },
+  { id: 24, term: "Synapse", definition: "Junction where information is transmitted from one neuron to another.", category: "Nervous System", subcategory: "" }
+];
+
+// Placeholder multiple choice questions
+export const MULTIPLE_CHOICE_QUESTIONS: MedicalQuizQuestion[] = [
   {
     id: 1,
-    question: "What does the prefix 'brady-' mean?",
-    options: ["Slow", "Fast", "Difficult", "Painful"],
-    correctOptionIndex: 0,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 2,
-    question: "What does the suffix '-ectomy' indicate?",
-    options: ["Inflammation", "Surgical removal", "Record or image", "Flow or discharge"],
+    question: "Which bone is known as the collar bone?",
+    options: ["Femur", "Clavicle", "Scapula", "Tibia"],
     correctOptionIndex: 1,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
+    category: "Skeletal System",
+    subcategory: ""
   },
   {
-    id: 3,
-    question: "The prefix 'hyper-' means:",
-    options: ["Below", "Within", "Above normal", "Beside"],
+    id: 2,
+    question: "Which organ pumps blood throughout the body?",
+    options: ["Liver", "Brain", "Heart", "Lung"],
     correctOptionIndex: 2,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 4,
-    question: "The suffix '-itis' refers to:",
-    options: ["Disease", "Inflammation", "Condition", "Process"],
-    correctOptionIndex: 1,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
-  },
-  {
-    id: 5,
-    question: "What does the prefix 'dys-' indicate?",
-    options: ["Double", "Abnormal/difficult", "Away from", "Through"],
-    correctOptionIndex: 1,
-    category: "Medical Terminology",
-    subcategory: "Prefixes/Suffixes"
+    category: "Circulatory System",
+    subcategory: ""
   }
-]; 
+];
+
+// Placeholder fill in the blank style questions
+export const FILL_IN_THE_BLANK_QUESTIONS: MedicalQuizQuestion[] = [
+  {
+    id: 1,
+    question: "The _______ carries air from the throat to the lungs.",
+    options: ["Trachea", "Esophagus", "Bronchi", "Aorta"],
+    correctOptionIndex: 0,
+    category: "Respiratory System",
+    subcategory: ""
+  },
+  {
+    id: 2,
+    question: "The largest part of the human brain is called the _______.",
+    options: ["Cerebellum", "Spinal Cord", "Cerebrum", "Medulla"],
+    correctOptionIndex: 2,
+    category: "Nervous System",
+    subcategory: ""
+  }
+];

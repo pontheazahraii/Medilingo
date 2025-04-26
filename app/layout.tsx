@@ -10,6 +10,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config";
 import { HeadInject } from "./head-inject";
 
+
+
 import "./globals.css";
 
 const font = Nunito({ subsets: ["latin"] });
@@ -23,34 +25,16 @@ export const metadata: Metadata = siteConfig;
 // Check if we're in development mode
 const isDevelopment = process.env.NODE_ENV === "development";
 
+// 💡 Choose the provider dynamically
+const ClerkProviderToUse = isDevelopment ? MockClerkProvider : ClerkProvider;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Use mock provider in development if needed
-  if (isDevelopment) {
-    return (
-      <MockClerkProvider>
-        <html lang="en">
-          <head>
-            <HeadInject />
-          </head>
-          <body className={font.className}>
-            <Toaster theme="light" richColors closeButton />
-            <ExitModal />
-            <HeartsModal />
-            <PracticeModal />
-            {children}
-          </body>
-        </html>
-      </MockClerkProvider>
-    );
-  }
-  
-  // Use real Clerk provider in production
   return (
-    <ClerkProvider
+    <ClerkProviderToUse
       appearance={{
         layout: {
           logoImageUrl: "/favicon.ico",
@@ -61,6 +45,9 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
+        <head>
+          <HeadInject />
+        </head>
         <body className={font.className}>
           <Toaster theme="light" richColors closeButton />
           <ExitModal />
@@ -69,6 +56,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkProviderToUse>
   );
 }

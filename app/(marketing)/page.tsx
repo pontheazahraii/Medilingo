@@ -57,8 +57,8 @@ const MarketingPage = () => {
 
           <div className="max-w-[500px] flex-1">
             <img
-              src="/hero.svg"
-              alt="Medilingo Hero"
+              src="/Home_PAge_Pete_Logo.png"
+              alt="Medilingo Pete Home PageLogo"
               className="w-full h-auto"
             />
           </div>
@@ -66,7 +66,7 @@ const MarketingPage = () => {
       </div>
 
       <footer className="py-6 text-center text-neutral-600 dark:text-neutral-400">
-        <p>© 2023 Medilingo. All rights reserved.</p>
+        <p>© 2025 Medilingo. PantherHacks Production.</p>
       </footer>
     </div>
   );
