@@ -2,7 +2,7 @@ CREATE SCHEMA medilingo AUTHORIZATION medilingo_user;
 SET search_path TO medilingo;
 
 CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "username" varchar,
   "email" varchar,
   "created_at" timestamp,
@@ -13,19 +13,19 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "terminology" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "term" varchar,
   "definition" text,
   "system_id" integer
 );
 
 CREATE TABLE "systems" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "system_name" varchar
 );
 
 CREATE TABLE "questions" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "question_type" bool,
   "question" text,
   "system_id" integer,
@@ -39,7 +39,7 @@ CREATE TABLE "questions" (
 );
 
 CREATE TABLE "user_progress" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "question_id" int,
   "asked_at" timestamp,
@@ -52,20 +52,6 @@ CREATE TABLE "user_progress" (
 ALTER TABLE "terminology" ADD FOREIGN KEY ("system_id") REFERENCES "systems" ("id");
 
 ALTER TABLE "questions" ADD FOREIGN KEY ("system_id") REFERENCES "systems" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_0") REFERENCES "answers" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_1") REFERENCES "answers" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_2") REFERENCES "answers" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_3") REFERENCES "answers" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_4") REFERENCES "answers" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_5") REFERENCES "answers" ("id");
-
-ALTER TABLE "questions" ADD FOREIGN KEY ("option_6") REFERENCES "answers" ("id");
 
 ALTER TABLE "user_progress" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
