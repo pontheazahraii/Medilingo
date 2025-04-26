@@ -1,3 +1,6 @@
+CREATE SCHEMA medilingo AUTHORIZATION medilingo_user;
+SET search_path TO medilingo;
+
 CREATE TABLE "users" (
   "id" integer PRIMARY KEY,
   "username" varchar,
@@ -41,7 +44,7 @@ CREATE TABLE "answers" (
 );
 
 CREATE TABLE "user_progress" (
-  "id" integery,
+  "id" integer PRIMARY KEY,
   "user_id" integer,
   "question_id" int,
   "asked_at" timestamp,
