@@ -24,6 +24,7 @@ CREATE TABLE "systems" (
 CREATE TABLE "questions" (
   "id" integer PRIMARY KEY,
   "question_type" bool,
+  "question" text,
   "system_id" integer,
   "option_0" integer,
   "option_1" integer,
