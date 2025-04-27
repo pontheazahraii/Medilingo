@@ -8,6 +8,7 @@ import { Volume2, Star } from "lucide-react";
 import { SessionProgressDisplay } from "@/app/components/SessionProgressDisplay";
 import { useSessionProgress } from "@/app/contexts/SessionProgressContext";
 import { toast } from "sonner";
+import {use} from "react";
 
 interface LearnPageProps {
   params: {
@@ -29,7 +30,9 @@ const getCourseTitle = (id: number): string => {
 
 const LearnPage = (props: LearnPageProps) => {
   const router = useRouter();
-  const numericCategoryId = Number(props.params.categoryId) - 1;
+  // const numericCategoryId = Number(props.params.categoryId) - 1;
+  const numericCategoryId = Number(use(props.params).categoryId - 1); // Use React.use() to unwrap params
+
   const { isCardStarred, toggleStarCard } = useSessionProgress();
 
   console.log("Category Id: ", numericCategoryId);
@@ -134,7 +137,7 @@ const LearnPage = (props: LearnPageProps) => {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold mb-6 text-center">Course {numericCategoryId} - {courseTitle}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">{courseTitle}</h1>
 
       {/* Session Progress */}
       <div className="w-full max-w-md mb-8">

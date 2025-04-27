@@ -62,7 +62,8 @@ const PracticePage = ({ params }: PracticePageProps) => {
   };
 
   const handleGoBack = () => {
-    router.push(`/learn/${numericCategoryId}`);
+    const newCat = parseInt(numericCategoryId) + 1
+    router.push(`/learn/${newCat}`);
   };
 
   const handleToggleStar = (cardId: number, e: React.MouseEvent) => {
