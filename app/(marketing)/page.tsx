@@ -10,7 +10,7 @@ const MarketingPage = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
       <nav className="flex justify-between items-center py-6">
         <div className="flex items-center">
-          <img src="/mascot.svg" alt="Medilingo" className="h-10 w-10" />
+          <img src="/Pete_Alone_Logo.png" alt="Medilingo" className="h-10 w-10" />
           <h1 className="text-2xl font-bold ml-2">Medilingo</h1>
         </div>
         <div className="flex items-center gap-x-4">

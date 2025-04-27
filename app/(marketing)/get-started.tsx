@@ -13,7 +13,7 @@ const GetStartedPage = () => {
       <div className="flex items-center mb-8">
         <Link href="/">
           <div className="flex items-center">
-            <Image src="/mascot.svg" alt="Medilingo Mascot" width={40} height={40} />
+            <Image src="/Pete_Alone_Logo.png" alt="Medilingo Mascot" width={40} height={40} />
             <h1 className="text-2xl font-bold ml-2">Medilingo</h1>
           </div>
         </Link>

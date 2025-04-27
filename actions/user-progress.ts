@@ -37,7 +37,7 @@ export const upsertUserProgress = async (categoryId: number) => {
       .set({
         activeCategoryId: categoryId,
         userName: user.firstName || "User",
-        userImageSrc: user.imageUrl || "/mascot.svg",
+        userImageSrc: user.imageUrl || "/Pete_Alone_Logo.png",
       })
       .where(eq(userProgress.userId, userId));
 
@@ -50,7 +50,7 @@ export const upsertUserProgress = async (categoryId: number) => {
     userId,
     activeCategoryId: categoryId,
     userName: user.firstName || "User",
-    userImageSrc: user.imageUrl || "/mascot.svg",
+    userImageSrc: user.imageUrl || "/Pete_Alone_Logo.png",
   });
 
   revalidatePath("/courses");

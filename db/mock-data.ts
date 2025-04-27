@@ -99,7 +99,7 @@ export const mockUserProgress = {
   id: 1,
   userId: "user_mock",
   userName: "Medical Student",
-  userImageSrc: "/mascot.svg",
+  userImageSrc: "/Pete_Alone_Logo.png",
   activeCategoryId: 1,
   points: 100,
   level: "1",
