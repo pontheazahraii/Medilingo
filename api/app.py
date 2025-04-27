@@ -58,11 +58,14 @@ def get_terminology_by_system(system_id: int):
     return terminology
 
 @app.get("/questions/question_type={question_type}")
-def get_questions(question_type: str):
+def get_questions(question_type: bool):
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     cur.execute('SET search_path TO medilingo;')
-    cur.execute('SELECT * FROM questions WHERE question_type IS %s;', (question_type))
+    if question_type: 
+        cur.execute('SELECT * FROM questions WHERE question_type IS TRUE;')
+    else:
+        cur.execute('SELECT * FROM questions WHERE question_type IS FALSE;')
     questions = cur.fetchall()
     cur.close()
     conn.close()
