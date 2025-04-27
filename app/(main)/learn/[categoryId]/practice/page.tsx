@@ -73,7 +73,7 @@ const PracticePage = ({ params }: PracticePageProps) => {
       {/* Flashcard */}
       <div
         onClick={handleFlip}
-        className="relative flex items-center justify-center w-[900px] h-[500px] mb-8 cursor-pointer border rounded-xl shadow-2xl bg-white hover:scale-105 transition-transform duration-300"
+        className="relative flex items-center justify-center w-[90%] max-w-[900px] h-[50vh] max-h-[500px] mb-8 cursor-pointer border rounded-xl shadow-2xl bg-white hover:scale-105 transition-transform duration-300"
       >
 
         <p className="text-4xl font-semibold text-center p-4">
