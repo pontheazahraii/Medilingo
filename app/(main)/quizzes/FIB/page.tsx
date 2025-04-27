@@ -24,7 +24,7 @@ const MCQuestionCourse = () => {
 
   return (
     <div className="flex flex-col items-left justify-center p-8">
-      <h1 className="text-3xl font-bold mb-4">MC Questions</h1>
+      <h1 className="text-3xl font-bold mb-4">Fill In The Blank Questions</h1>
       <p className="text-lg text-gray-700 mb-6">Test your skills with these questions:</p>
 
       {/* Loop through questions and display them as cards */}

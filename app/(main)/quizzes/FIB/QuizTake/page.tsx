@@ -13,6 +13,8 @@ const MCQuestionCourse = () => {
   const [quiz, setQuiz] = useState<any>(null); // Store quiz data
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState<boolean | null>(null); // To track if the selected answer is correct
+
   const [score, setScore] = useState(0);
 
   useEffect(() => {
@@ -34,12 +36,22 @@ const MCQuestionCourse = () => {
       setScore(score + 1);
     }
     setSelectedOption(null);
+    setIsAnswerCorrect(null);
 
     if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       // Once all questions are answered, display the final score
       alert(`Quiz Complete! Your final score is: ${score}`);
+    }
+  };
+
+  const handleCheckAnswer = () => {
+    if (selectedOption === quiz?.questions[currentQuestionIndex].correctAnswer) {
+      setIsAnswerCorrect(true);
+      setScore(score + 1); // Increment score if the answer is correct
+    } else {
+      setIsAnswerCorrect(false);
     }
   };
 
@@ -84,16 +96,36 @@ const MCQuestionCourse = () => {
         </ul>
       </div>
 
+      
       {/* Listen Button */}
       <Button onClick={handleSpeak} className="mb-4">
         <Volume2 className="h-4 w-4 mr-2" />
         Listen
       </Button>
+      {/* Check Answer Button */}
+      <Button
+        onClick={handleCheckAnswer}
+        disabled={!selectedOption}
+        className="mb-4 rounded-full px-6 py-3 bg-green-600 text-white hover:bg-green-500"
+      >
+        Check Answer
+      </Button>
+
+      {/* Show Feedback */}
+      {isAnswerCorrect !== null && (
+        <div className={`text-xl ${isAnswerCorrect ? "text-green-600" : "text-red-600"}`}>
+          {isAnswerCorrect ? "Correct!" : "Incorrect!"}
+        </div>
+      )}
+
+
+
 
       {/* Next Question Button */}
-      <Button onClick={handleNextQuestion} disabled={!selectedOption}>
-        Next
+      <Button onClick={handleNextQuestion} disabled={isAnswerCorrect === null} className="mt-4 rounded-full px-6 py-3 bg-blue-600 text-white hover:bg-blue-500">
+        Next Question
       </Button>
+
 
       {/* Display Score */}
       {currentQuestionIndex === quiz.questions.length - 1 && (
