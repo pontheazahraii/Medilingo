@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchTerminology } from "@/api/api";
-import { use } from "react";
 
 interface LearnPageProps {
   params: {
@@ -31,10 +30,8 @@ interface LearnPageProps {
 
 const LearnPage = (props: LearnPageProps) => {
   const router = useRouter();  
-  // const numericCategoryId = Number(props.params.categoryId);
-  const { categoryId } = use(props.params);
-
-  const numericCategoryId = Number(categoryId);
+  const numericCategoryId = Number(props.params.categoryId);
+  
   console.log("Category Id: ", numericCategoryId)
 
   const [flashcards, setFlashcards] = useState<any[]>([]);
@@ -118,9 +115,14 @@ const LearnPage = (props: LearnPageProps) => {
  
   return (
     <div className="flex flex-col items-center justify-center p-8">
-      <Button onClick={handleGoBack} className="mb-6 self-start">
-        ← Back to Courses
-      </Button>
+      <div className="w-full flex justify-between items-center mb-6">
+        <Button onClick={handleGoBack} className="self-start">
+          ← Back to Courses
+        </Button>
+        <Button onClick={handlePracticeClick} className="px-8 py-4 text-lg font-semibold">
+          Practice Flashcards
+        </Button>
+      </div>
       <h1 className="text-2xl font-bold mb-6">Course {numericCategoryId} - XXXX</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -130,13 +132,10 @@ const LearnPage = (props: LearnPageProps) => {
             className="border rounded-lg shadow-lg p-6 w-64 h-48 flex flex-col justify-center items-center bg-white hover:scale-105 transition-transform duration-300"
           >
             <p className="text-lg font-semibold">{card.term}</p>
-            <p className="text-gray-500 mt-2 text-center">{card.definition}</p>
+            <p className="text-gray-500 mt-2 text-center line-clamp-2 overflow-hidden">{card.definition}</p>
           </div>
         ))}
       </div>
-      <Button onClick={handlePracticeClick} className="mt-8 px-8 py-4 text-lg font-semibold">
-          Practice Flashcards
-      </Button>
     </div>
   );
 };
