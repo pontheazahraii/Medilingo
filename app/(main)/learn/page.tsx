@@ -67,7 +67,7 @@ const MedicalLearningPage = async () => {
   
 
   return (
-    <div className="flex flex-col">
+    <div className="mx-auto h-full max-w-[1550px] px-3">
       {/* Header */}
       <header className="w-full bg-gray-100 py-6 shadow-sm">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
@@ -81,14 +81,7 @@ const MedicalLearningPage = async () => {
 
           {/* Right side: Link to GitHub */}
           <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link 
-              href="https://github.com/pontheazahraii/Medilingo/tree/main" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gray-700 hover:text-blue-500 font-medium text-sm"
-            >
               Helping You Keep Those Medical Terms In The Noggin'
-            </Link>
           </div>
         </div>
       </header>
