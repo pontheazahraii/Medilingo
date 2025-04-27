@@ -29,13 +29,13 @@ CREATE TABLE "questions" (
   "question_type" bool,
   "question" text,
   "system_id" integer,
-  "option_0" integer,
-  "option_1" integer,
-  "option_2" integer,
-  "option_3" integer,
-  "option_4" integer,
-  "option_5" integer,
-  "option_6" integer
+  "option_0" text,
+  "option_1" text,
+  "option_2" text,
+  "option_3" text,
+  "option_4" text,
+  "option_5" text,
+  "option_6" text
 );
 
 CREATE TABLE "user_progress" (
