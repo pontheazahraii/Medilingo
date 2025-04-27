@@ -6,11 +6,8 @@ import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 const MarketingPage = () => {
-  const { isSignedIn, isLoaded, signOut } = useAuth();
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col min-h-screen">
-      {/* Navbar */}
       <nav className="flex justify-between items-center py-6">
         <div className="flex items-center">
           <img src="/mascot.svg" alt="Medilingo" className="h-10 w-10" />
@@ -25,11 +22,6 @@ const MarketingPage = () => {
           >
             Login
           </Button>
-          <Link href="/sign-up">
-            <Button size="sm">
-              Get Started
-            </Button>
-          </Link>
         </div>
       </nav>
 
@@ -43,21 +35,6 @@ const MarketingPage = () => {
             <h3 className="text-xl sm:text-2xl font-medium text-neutral-600 dark:text-neutral-400">
               Interactive learning platform designed for medical students, nurses, and healthcare practitioners
             </h3>
-
-            {/* Main CTA Button */}
-            <div className="flex gap-x-4">
-              <Link href={isSignedIn ? "/learn" : "/sign-in"}>
-                <Button>
-                  {isSignedIn ? "Continue Learning" : "Login"}
-                  <Sparkles className="w-4 h-4 ml-2 fill-white" />
-                </Button>
-              </Link>
-              <Link href="/courses">
-                <Button variant="secondary">
-                  Explore Medical Systems
-                </Button>
-              </Link>
-            </div>
           </div>
 
           <div className="max-w-[500px] flex-1">
