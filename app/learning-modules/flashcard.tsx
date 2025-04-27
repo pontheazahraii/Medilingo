@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, X, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Check, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -69,6 +69,29 @@ export const FlashcardMode = ({ flashcards, onComplete }: FlashcardModeProps) =>
     onComplete();
   };
 
+  // Text to speech function
+  const speakText = useCallback((text: string) => {
+    // Stop any current speech
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+    
+    // Create a new speech utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;  // Slightly slower than default
+    utterance.pitch = 1;   // Normal pitch
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
+  // Handle speak button click
+  const handleSpeak = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card from flipping
+    const textToSpeak = flipped ? currentCard.definition : currentCard.term;
+    speakText(textToSpeak);
+  };
+
   return (
     <div className="flex h-full flex-col items-center justify-between p-4">
       <div className="w-full max-w-md space-y-4">
@@ -97,6 +120,16 @@ export const FlashcardMode = ({ flashcards, onComplete }: FlashcardModeProps) =>
               <div className="mt-4 text-sm text-blue-500">
                 {flipped ? "Click to see term" : "Click to see definition"}
               </div>
+              <Button 
+                onClick={handleSpeak} 
+                variant="ghost" 
+                size="sm" 
+                className="mt-2"
+                aria-label="Listen to pronunciation"
+              >
+                <Volume2 className="h-4 w-4 mr-2" />
+                Listen
+              </Button>
             </div>
           </Card>
         </div>

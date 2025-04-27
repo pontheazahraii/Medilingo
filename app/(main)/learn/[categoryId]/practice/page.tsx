@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { SKELETAL_FLASHCARDS,
   MUSCULAR_FLASHCARDS,
   CIRCULATORY_FLASHCARDS,
@@ -10,6 +10,7 @@ import { SKELETAL_FLASHCARDS,
  } from "@/constants/medical-content";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Volume2 } from "lucide-react";
 
 interface PracticePageProps {
   params: {
@@ -60,6 +61,28 @@ const PracticePage = ({ params }: PracticePageProps) => {
     router.push(`/learn/${categoryId}`);
   };
 
+  // Text to speech functionality
+  const speakText = useCallback((text: string) => {
+    // Stop any current speech
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+    
+    // Create a new speech utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;  // Slightly slower than default
+    utterance.pitch = 1;   // Normal pitch
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
+  const handleSpeak = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card from flipping
+    const textToSpeak = flipped ? currentFlashcard.definition : currentFlashcard.term;
+    speakText(textToSpeak);
+  };
+
   const currentFlashcard = flashcards[currentIndex];
 
   return (
@@ -71,14 +94,28 @@ const PracticePage = ({ params }: PracticePageProps) => {
       <h1 className="text-3xl font-bold mb-6">Practice Flashcards</h1>
 
       {/* Flashcard */}
-      <div
-        onClick={handleFlip}
-        className="relative flex items-center justify-center w-[90%] max-w-[900px] h-[50vh] max-h-[500px] mb-8 cursor-pointer border rounded-xl shadow-2xl bg-white hover:scale-105 transition-transform duration-300"
-      >
-
-        <p className="text-4xl font-semibold text-center p-4">
-          {flipped ? currentFlashcard.definition : currentFlashcard.term}
-        </p>
+      <div className="relative w-[90%] max-w-[900px] h-[50vh] max-h-[500px] mb-8 border rounded-xl shadow-2xl bg-white hover:scale-105 transition-transform duration-300">
+        <div
+          onClick={handleFlip}
+          className="w-full h-full flex flex-col items-center justify-center cursor-pointer"
+        >
+          <p className="text-4xl font-semibold text-center p-4">
+            {flipped ? currentFlashcard.definition : currentFlashcard.term}
+          </p>
+          
+          <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+            <Button 
+              onClick={handleSpeak} 
+              variant="secondary" 
+              size="sm"
+              className="mx-auto mt-4"
+              aria-label="Listen to pronunciation"
+            >
+              <Volume2 className="h-4 w-4 mr-2" />
+              Listen
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Navigation Buttons */}

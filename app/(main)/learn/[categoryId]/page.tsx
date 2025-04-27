@@ -10,8 +10,9 @@ import { SKELETAL_FLASHCARDS,
  } from "@/constants/medical-content";
 import { Button } from "@/components/ui/button"; 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetchTerminology } from "@/api/api";
+import { Volume2 } from "lucide-react";
 
 interface LearnPageProps {
   params: {
@@ -49,6 +50,27 @@ const LearnPage = (props: LearnPageProps) => {
 
   const handlePracticeClick = () => {
     router.push(`/learn/${numericCategoryId}/practice`); // New behavior: navigate!
+  };
+
+  // Text to speech functionality
+  const speakText = useCallback((text: string) => {
+    // Stop any current speech
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+    
+    // Create a new speech utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;  // Slightly slower than default
+    utterance.pitch = 1;   // Normal pitch
+    
+    // Speak the text
+    window.speechSynthesis.speak(utterance);
+  }, []);
+
+  const handleSpeak = (e: React.MouseEvent, text: string) => {
+    e.stopPropagation(); // Prevent any other handlers
+    speakText(text);
   };
 
   // let flashcards = SKELETAL_FLASHCARDS; // default
@@ -147,13 +169,25 @@ const LearnPage = (props: LearnPageProps) => {
         {flashcards.map((card) => (
           <div
             key={card.id}
-            className="border border-gray-100 rounded-xl shadow-md p-8 w-full h-56 flex flex-col bg-white hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="border border-gray-100 rounded-xl shadow-md p-8 w-full h-64 flex flex-col bg-white hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
             <div className="flex-1 flex items-center justify-center mb-4">
               <p className="text-xl font-semibold text-gray-800 text-center">{card.term}</p>
             </div>
             <div className="flex-1 flex items-start justify-center">
               <p className="text-sm text-gray-600 text-center line-clamp-2 overflow-hidden">{card.definition}</p>
+            </div>
+            <div className="flex justify-center mt-4">
+              <Button 
+                onClick={(e) => handleSpeak(e, `${card.term}. ${card.definition}`)} 
+                variant="ghost" 
+                size="sm"
+                className="mt-2"
+                aria-label="Listen to pronunciation"
+              >
+                <Volume2 className="h-4 w-4 mr-2" />
+                Listen
+              </Button>
             </div>
           </div>
         ))}
