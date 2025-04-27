@@ -12,7 +12,10 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { fetchTerminology } from "@/api/api";
-import { Volume2 } from "lucide-react";
+import { Volume2, Star } from "lucide-react";
+import { SessionProgressDisplay } from "@/app/components/SessionProgressDisplay";
+import { useSessionProgress } from "@/app/contexts/SessionProgressContext";
+import { toast } from "sonner";
 
 interface LearnPageProps {
   params: {
@@ -41,6 +44,7 @@ const getCourseTitle = (id: number): string => {
 const LearnPage = (props: LearnPageProps) => {
   const router = useRouter();  
   const numericCategoryId = Number(props.params.categoryId);
+  const { isCardStarred, toggleStarCard } = useSessionProgress();
   
   console.log("Category Id: ", numericCategoryId)
 
@@ -50,6 +54,17 @@ const LearnPage = (props: LearnPageProps) => {
 
   const handlePracticeClick = () => {
     router.push(`/learn/${numericCategoryId}/practice`); // New behavior: navigate!
+  };
+
+  const handleToggleStar = (cardId: number, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent any other handlers
+    toggleStarCard(numericCategoryId, cardId);
+    
+    if (isCardStarred(numericCategoryId, cardId)) {
+      toast.info("Removed from favorites");
+    } else {
+      toast.success("Added to favorites");
+    }
   };
 
   // Text to speech functionality
@@ -144,6 +159,10 @@ const LearnPage = (props: LearnPageProps) => {
   }
 
   const courseTitle = getCourseTitle(numericCategoryId);
+
+  // Filter starred cards
+  const starredCards = flashcards.filter(card => isCardStarred(numericCategoryId, card.id));
+  const hasStarredCards = starredCards.length > 0;
  
   return (
     <div className="flex flex-col items-center justify-center p-8 max-w-7xl mx-auto">
@@ -163,14 +182,75 @@ const LearnPage = (props: LearnPageProps) => {
         </Button>
       </div>
       
-      <h1 className="text-3xl font-bold mb-12 text-center">Course {numericCategoryId} - {courseTitle}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Course {numericCategoryId} - {courseTitle}</h1>
+      
+      {/* Session Progress */}
+      <div className="w-full max-w-md mb-8">
+        <SessionProgressDisplay courseId={numericCategoryId} />
+      </div>
 
+      {/* Starred Cards Section */}
+      {hasStarredCards && (
+        <div className="w-full mb-10">
+          <h2 className="text-xl font-bold mb-4 text-yellow-600">
+            <Star className="inline-block h-5 w-5 fill-yellow-400 text-yellow-400 mr-2" />
+            Your Favorite Cards
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full px-4 mb-8">
+            {starredCards.map((card) => (
+              <div
+                key={`starred-${card.id}`}
+                className="border border-yellow-200 rounded-xl shadow-md p-8 w-full h-64 flex flex-col bg-yellow-50 hover:shadow-xl hover:scale-105 transition-all duration-300"
+              >
+                <div className="absolute top-2 right-2">
+                  <button 
+                    onClick={(e) => handleToggleStar(card.id, e)}
+                    className="p-2 hover:bg-yellow-100 rounded-full"
+                  >
+                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  </button>
+                </div>
+                <div className="flex-1 flex items-center justify-center mb-4">
+                  <p className="text-xl font-semibold text-gray-800 text-center">{card.term}</p>
+                </div>
+                <div className="flex-1 flex items-start justify-center">
+                  <p className="text-sm text-gray-600 text-center line-clamp-2 overflow-hidden">{card.definition}</p>
+                </div>
+                <div className="flex justify-center mt-4">
+                  <Button 
+                    onClick={(e) => handleSpeak(e, `${card.term}. ${card.definition}`)} 
+                    variant="ghost" 
+                    size="sm"
+                    className="mt-2"
+                    aria-label="Listen to pronunciation"
+                  >
+                    <Volume2 className="h-4 w-4 mr-2" />
+                    Listen
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="w-full border-b border-gray-200 my-4"></div>
+        </div>
+      )}
+
+      {/* All Cards */}
+      <h2 className="text-xl font-bold mb-4 self-start">All Flashcards</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full px-4">
         {flashcards.map((card) => (
           <div
             key={card.id}
-            className="border border-gray-100 rounded-xl shadow-md p-8 w-full h-64 flex flex-col bg-white hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="border border-gray-100 rounded-xl shadow-md p-8 w-full h-64 flex flex-col bg-white hover:shadow-xl hover:scale-105 transition-all duration-300 relative"
           >
+            <div className="absolute top-2 right-2">
+              <button 
+                onClick={(e) => handleToggleStar(card.id, e)}
+                className="p-2 hover:bg-gray-100 rounded-full"
+              >
+                <Star className={`h-5 w-5 ${isCardStarred(numericCategoryId, card.id) ? "fill-yellow-400 text-yellow-400" : "text-gray-400"}`} />
+              </button>
+            </div>
             <div className="flex-1 flex items-center justify-center mb-4">
               <p className="text-xl font-semibold text-gray-800 text-center">{card.term}</p>
             </div>
