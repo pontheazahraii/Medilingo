@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
 const MarketingPage = () => {
