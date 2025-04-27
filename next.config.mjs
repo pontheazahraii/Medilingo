@@ -2,8 +2,6 @@
 const nextConfig = {
   reactStrictMode: true, 
   experimental: {
-    appDir: true, 
-    disableReactOverDevOverlay: true, 
   }, 
   async headers() {
     return [

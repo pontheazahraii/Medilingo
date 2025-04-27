@@ -1,4 +1,3 @@
-
 // export async function fetchTerminology(systemId: number) {
 //   try {
 //     const response = await fetch(`https://api-endpoint-227943627758.us-central1.run.app/terminology/system_id=${systemId}`, {
@@ -23,21 +22,12 @@
 export async function fetchTerminology(systemId: number) {
   try {
     console.log("[fetchTerminology] Requesting system:", systemId);
-    // TEMPORARY for testing
-    const response = await fetch(`https://api-endpoint-227943627758.us-central1.run.app/terminology/system_id=${systemId}`, {
+    const response = await fetch(`/api/terminology?systemId=${systemId}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-      }, 
-      // mode: "no-cors",
+        "Content-Type": "application/json"
+      }
     });
-
-    // const response = await fetch(`https://api-endpoint-227943627758.us-central1.run.app/terminology/system_id=${systemId}`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
 
     console.log("[fetchTerminology] Raw response:", response);
 
