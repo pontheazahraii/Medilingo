@@ -38,42 +38,42 @@ export const MEDICAL_CATEGORIES = [
   {
     id: 1,
     title: "Skeletal System Flashcards",
-    imageSrc: "/anatomy-icon.svg",
+    imageSrc: "/SkeletalSystem_Card.png",
     description: "Study the human bones and structure",
     subcategories: []
   },
   {
     id: 2,
     title: "Muscular System Flashcards",
-    imageSrc: "/physiology-icon.svg",
+    imageSrc: "/MuscularSystem_Card.png",
     description: "Study the body's muscles and movement",
     subcategories: []
   },
   {
     id: 3,
     title: "Circulatory System Flashcards",
-    imageSrc: "/pharma-icon.svg",
+    imageSrc: "/CirculatorySystem_Card.png",
     description: "Explore the blood flow and the heart",
     subcategories: []
   },
   {
     id: 4,
     title: "Digestive System Flashcardsogy",
-    imageSrc: "/pathology-icon.svg",
+    imageSrc: "/DigestiveSystem_Card.png",
     description: "Study digestion and metabolism",
     subcategories: []
   },
   {
     id: 5,
     title: "Respiratory System Flashcards",
-    imageSrc: "/terminology-icon.svg",
+    imageSrc: "/RespiratorySystem_Card.png",
     description: "Learn about breathing and lungs",
     subcategories: []
   },
   {
     id: 6,
     title: "Nervous System Flashcards",
-    imageSrc: "/procedures-icon.svg",
+    imageSrc: "/NervousSystem_Card.png",
     description: "Study the nervous system and brain",
     subcategories: []
   },
