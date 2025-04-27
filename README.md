@@ -11,9 +11,13 @@ Medilingo is a medical terminology web app that teaches users (e.g., patients, c
 ### Google Cloud Platform
 #### IAM Permissions 
 `Compute Organization Resource Admin`
+`Cloud Run Admin`
+`Secret Manager Secret Accessor`
+`Artifact Registry Writer`
+`Compute Network Admin`
 
 #### Compute Engine Virtual Machine
-The PostgreSQL database is hosted on a [virtual machine](https://35.239.87.6/). This VM acts as a remote database server that the Node.js application connects to over the network.
+The PostgreSQL database is hosted on a [virtual machine](https://35.239.87.6/). This VM acts as a remote database server that the Node.js application connects to over the network. The database is accessible via an [FastAPI endpoint](https://api-endpoint-227943627758.us-central1.run.app) for ease of integration. 
 
 #### Cloud Run
 This service hosts the Node.js backend for Medilingo, deployed using Google Cloud Run CI/CD Github-linked container image.
