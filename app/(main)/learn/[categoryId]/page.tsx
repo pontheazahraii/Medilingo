@@ -10,6 +10,9 @@ import { SKELETAL_FLASHCARDS,
  } from "@/constants/medical-content";
 import { Button } from "@/components/ui/button"; 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { fetchTerminology } from "@/api/api";
+import { use } from "react";
 
 interface LearnPageProps {
   params: {
@@ -17,45 +20,91 @@ interface LearnPageProps {
   };
 }
 
+// interface Flashcard {
+//   id: number; 
+//   term: string;
+//   definition: string;
+// }
+
+
 
 
 const LearnPage = (props: LearnPageProps) => {
-  const categoryId = Number(props.params.categoryId);
-  console.log("Category Id: ", categoryId)
+  const router = useRouter();  
+  // const numericCategoryId = Number(props.params.categoryId);
+  const { categoryId } = use(props.params);
 
-  
-  const router = useRouter();                    // Inside your component (LearnPage)
+  const numericCategoryId = Number(categoryId);
+  console.log("Category Id: ", numericCategoryId)
+
+  const [flashcards, setFlashcards] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const handlePracticeClick = () => {
-    router.push(`/learn/${categoryId}/practice`); // New behavior: navigate!
+    router.push(`/learn/${numericCategoryId}/practice`); // New behavior: navigate!
   };
 
-  let flashcards = SKELETAL_FLASHCARDS; // default
-  let title = "Skeletal System Flashcards";
+  // let flashcards = SKELETAL_FLASHCARDS; // default
+  // let title = "Skeletal System Flashcards";
 
-  if (categoryId === 2) {
-    flashcards = MUSCULAR_FLASHCARDS;
-    title = "Muscular System Flashcards";
-  } else if (categoryId === 3) {
-    flashcards = CIRCULATORY_FLASHCARDS;
-    title = "Circulatory System Flashcards";
-  } else if (categoryId === 4) {
-    flashcards = DIGESTIVE_FLASHCARDS;
-    title = "Digestive System Flashcards";
-  } else if (categoryId === 5) {
-    flashcards = RESPIRATORY_FLASHCARDS;
-    title = "Respiratory System Flashcards";
-  } else if (categoryId === 6) {
-    flashcards = NERVOUS_FLASHCARDS;
-    title = "Nervous System Flashcards";
+  // if (categoryId === 2) {
+  //   flashcards = MUSCULAR_FLASHCARDS;
+  //   title = "Muscular System Flashcards";
+  // } else if (categoryId === 3) {
+  //   flashcards = CIRCULATORY_FLASHCARDS;
+  //   title = "Circulatory System Flashcards";
+  // } else if (categoryId === 4) {
+  //   flashcards = DIGESTIVE_FLASHCARDS;
+  //   title = "Digestive System Flashcards";
+  // } else if (categoryId === 5) {
+  //   flashcards = RESPIRATORY_FLASHCARDS;
+  //   title = "Respiratory System Flashcards";
+  // } else if (categoryId === 6) {
+  //   flashcards = NERVOUS_FLASHCARDS;
+  //   title = "Nervous System Flashcards";
+  // }
+
+  useEffect(() => {
+    async function loadFlashcards() {
+      try {
+        const data = await fetchTerminology(numericCategoryId);
+        setFlashcards(data);
+      } catch (err) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadFlashcards();
+    }, [numericCategoryId]);
+
+  //   if (numericCategoryId >= 1 && numericCategoryId <= 6) {
+  //     loadFlashcards();
+  //   } else {
+  //     setLoading(false); // don't try loading if not flashcard type
+  //   }
+  // }, [numericCategoryId]);
+
+  if (loading) {
+    return <div className="p-8 text-center text-xl font-bold">Loading flashcards {numericCategoryId}...</div>;
   }
+  if (error) {
+    return (
+      <div className="p-8 text-center text-3xl font-bold">
+        Error loading flashcards. {numericCategoryId}
+      </div>
+    );
+  }
+
+
 
   const handleGoBack = () => {
     router.push(`/courses`);
   };
 
 
-  if (categoryId > 6) {
+  if (numericCategoryId > 6) {
     // If user navigates to /learn/2 etc, show a simple message or 404 later
     return <div>
       <Button onClick={handleGoBack} className="mb-6 self-start">
@@ -72,7 +121,7 @@ const LearnPage = (props: LearnPageProps) => {
       <Button onClick={handleGoBack} className="mb-6 self-start">
         ← Back to Courses
       </Button>
-      <h1 className="text-2xl font-bold mb-6">{title}</h1>
+      <h1 className="text-2xl font-bold mb-6">Course {numericCategoryId} - XXXX</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {flashcards.map((card) => (
