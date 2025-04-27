@@ -35,25 +35,12 @@ const MarketingPage = () => {
             <h3 className="text-xl sm:text-2xl font-medium text-neutral-600 dark:text-neutral-400">
               Interactive learning for healthcare students and professionals
             </h3>
-            <div className="flex gap-x-4">
-              <Link href="/sign-up">
-                <Button>
-                  Get Started
-                  <Sparkles className="w-4 h-4 ml-2 fill-white" />
-                </Button>
-              </Link>
-              <Link href="/courses">
-                <Button variant="secondary">
-                  Explore Body Systems
-                </Button>
-              </Link>
-            </div>
           </div>
 
           <div className="max-w-[500px] flex-1">
             <img
-              src="/hero.svg"
-              alt="Medilingo Hero"
+              src="/Home_PAge_Pete_Logo.png"
+              alt="Medilingo Pete Home Page Logo"
               className="w-full h-auto"
             />
           </div>
