@@ -25,8 +25,17 @@ interface LearnPageProps {
 //   definition: string;
 // }
 
-
-
+const getCourseTitle = (id: number): string => {
+  const categories = [
+    "Skeletal System", 
+    "Muscular System", 
+    "Circulatory System", 
+    "Digestive System", 
+    "Respiratory System", 
+    "Nervous System"
+  ];
+  return categories[id - 1] || "Medical Terminology";
+};
 
 const LearnPage = (props: LearnPageProps) => {
   const router = useRouter();  
@@ -112,27 +121,40 @@ const LearnPage = (props: LearnPageProps) => {
     ;
   }
 
+  const courseTitle = getCourseTitle(numericCategoryId);
  
   return (
-    <div className="flex flex-col items-center justify-center p-8">
-      <div className="w-full flex justify-between items-center mb-6">
-        <Button onClick={handleGoBack} className="self-start">
+    <div className="flex flex-col items-center justify-center p-8 max-w-7xl mx-auto">
+      <div className="w-full flex justify-between items-center mb-10">
+        <Button 
+          onClick={handleGoBack} 
+          className="rounded-full px-6 py-3 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 shadow-sm transition-all"
+          variant="ghost"
+        >
           ← Back to Courses
         </Button>
-        <Button onClick={handlePracticeClick} className="px-8 py-4 text-lg font-semibold">
+        <Button 
+          onClick={handlePracticeClick} 
+          className="rounded-full px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium shadow-md transition-all"
+        >
           Practice Flashcards
         </Button>
       </div>
-      <h1 className="text-2xl font-bold mb-6">Course {numericCategoryId} - XXXX</h1>
+      
+      <h1 className="text-3xl font-bold mb-12 text-center">Course {numericCategoryId} - {courseTitle}</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full px-4">
         {flashcards.map((card) => (
           <div
             key={card.id}
-            className="border rounded-lg shadow-lg p-6 w-64 h-48 flex flex-col justify-center items-center bg-white hover:scale-105 transition-transform duration-300"
+            className="border border-gray-100 rounded-xl shadow-md p-8 w-full h-56 flex flex-col bg-white hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
-            <p className="text-lg font-semibold">{card.term}</p>
-            <p className="text-gray-500 mt-2 text-center line-clamp-2 overflow-hidden">{card.definition}</p>
+            <div className="flex-1 flex items-center justify-center mb-4">
+              <p className="text-xl font-semibold text-gray-800 text-center">{card.term}</p>
+            </div>
+            <div className="flex-1 flex items-start justify-center">
+              <p className="text-sm text-gray-600 text-center line-clamp-2 overflow-hidden">{card.definition}</p>
+            </div>
           </div>
         ))}
       </div>
