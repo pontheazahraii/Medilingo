@@ -68,6 +68,31 @@ const MedicalLearningPage = async () => {
 
   return (
     <div className="flex flex-col">
+      {/* Header */}
+      <header className="w-full bg-gray-100 py-6 shadow-sm">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
+          {/* Left side: Logo + App name */}
+          <div className="flex items-center gap-x-3">
+            <img src="/Pete_Alone_Logo.png" alt="Medilingo Mascot" className="h-10 w-10" />
+            <h1 className="text-2xl font-bold text-blue-600 tracking-wide">
+              Medilingo
+            </h1>
+          </div>
+
+          {/* Right side: Link to GitHub */}
+          <div className="flex space-x-4 mt-4 sm:mt-0">
+            <Link 
+              href="https://github.com/pontheazahraii/Medilingo/tree/main" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-700 hover:text-blue-500 font-medium text-sm"
+            >
+              Helping You Keep Those Medical Terms In The Noggin'
+            </Link>
+          </div>
+        </div>
+      </header>
+
       {/* Welcome Banner */}
       <div className="mx-auto mt-6 w-[90%] bg-blue-500 text-white py-3 px-6 text-center font-bold text-3xl rounded-2xl shadow-md">
         Welcome back, user123 !
@@ -150,12 +175,22 @@ const MedicalLearningPage = async () => {
         ))}
       </div>
     </div>
-      
+    
 
-    {/* Main Content (empty for now) */}
-    <div className="p-8">
-      {/* You can continue building your page content here */}
-    </div>
+    {/* Footer */}
+    <footer className="w-full mt-16 bg-gray-100 py-6">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
+        <p className="text-gray-600 text-sm text-center sm:text-left">
+          © 2025 Medilingo. Built with ❤️ at PantherHacks.
+        </p>
+
+        <div className="flex space-x-4 mt-4 sm:mt-0">
+          <Link href="https://github.com/pontheazahraii/Medilingo/tree/main" className="text-gray-600 hover:text-blue-500 text-sm">
+            Check Out Our Github Repo!
+          </Link>
+        </div>
+      </div>
+    </footer>
   </div>
   );
 };
