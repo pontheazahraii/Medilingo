@@ -54,21 +54,19 @@ export const LogoutButton = ({
       }
       
       if (clerkClient?.signOut) {
-        // Use Clerk in production
-        await clerkClient.signOut();
+        await clerkClient.signOut({ redirectUrl: "/" });
       } else if (mockClerk?.signOut) {
-        // Use mock in development
         await mockClerk.signOut();
+        router.push("/");
       }
       
-      // Always redirect to home page
-      router.push("/");
       toast.success("Logged out successfully");
     } catch (error) {
       console.error("Error during logout:", error);
       toast.error("Failed to log out");
     }
   };
+  
 
   return (
     <Button
