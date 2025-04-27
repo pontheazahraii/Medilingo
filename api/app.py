@@ -113,6 +113,11 @@ class UserProgressCreate(BaseModel):
 class UserUpdate(BaseModel):
     user_id: int
 
+class UserUpdateTerminology(BaseModel):
+    term: str
+    definition: str
+    system_id: int
+
 @app.post("/users")
 def create_user(user: UserCreate):
     conn = get_db_connection()
@@ -201,6 +206,25 @@ def update_user(user: UserUpdate):
     conn.close()
 
     return {"message": "User updated successfully", "user": updated_user}
+
+@app.post('new_terminology')
+def create_terminology(terminology: UserUpdateTerminology):
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute('SET search_path TO medilingo;')
+    cur.execute(
+        '''
+        INSERT INTO terminology (term, definition, system_id)
+        VALUES (%s, %s, %s) RETURNING *;
+        ''',
+        (terminology.term, terminology.definition, terminology.system_id)
+    )
+    new_terminology = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return new_terminology
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
