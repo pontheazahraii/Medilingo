@@ -11,6 +11,18 @@ import {
 
 import { MAX_HEARTS } from "@/constants";
 
+// Define users table to match the SQL schema
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username"),
+  email: text("email"),
+  created_at: timestamp("created_at"),
+  streak: integer("streak"),
+  longest_streak: integer("longest_streak"),
+  timezone: text("timezone"),
+  logged_in_last: timestamp("logged_in_last"),
+});
+
 export const medicalCategories = pgTable("medical_categories", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
