@@ -77,28 +77,45 @@ export const MEDICAL_CATEGORIES = [
     description: "Study the nervous system and brain",
     subcategories: []
   },
-  {
-    id: 7,
-    title: "Multiple Choice Practice",
-    imageSrc: "/MC_Card.png",
-    description: "Practice all 6 systems in a multiple choice format",
-    subcategories: []
-  },
-  {
-    id: 8,
-    title: "Fill In The Blank Practice",
-    imageSrc: "/FillBlank_Card.png",
-    description: "Practice all 6 systems in a fill in the black format",
-    subcategories: []
-  },
-  {
-    id: 9,
-    title: "Diagram Practice",
-    imageSrc: "/Diagram_Card.png",
-    description: "Practice identifying parts of all 6 body systems on diagrams",
-    subcategories: []
-  }
+  // {
+  //   id: 7,
+  //   title: "Multiple Choice Practice",
+  //   imageSrc: "/MC_Card.png",
+  //   description: "Practice all 6 systems in a multiple choice format",
+  //   subcategories: []
+  // },
+  // {
+  //   id: 8,
+  //   title: "Fill In The Blank Practice",
+  //   imageSrc: "/FillBlank_Card.png",
+  //   description: "Practice all 6 systems in a fill in the black format",
+  //   subcategories: []
+  // },
+  // {
+  //   id: 9,
+  //   title: "Diagram Practice",
+  //   imageSrc: "/Diagram_Card.png",
+  //   description: "Practice identifying parts of all 6 body systems on diagrams",
+  //   subcategories: []
+  // }
 ];
+
+
+export const MEDICAL_QUIZZES = [
+  {
+    id: 1,
+    title: "Multiple Choice Questions",
+    quiz: true,  // Flag indicating it's a quiz
+    progress: 75, // Example progress
+  },
+  {
+    id: 2,
+    title: "Fill In The Blank Questions",
+    quiz: true,
+    progress: 45,
+  },
+];
+
 
 // Flashcards for each system
 

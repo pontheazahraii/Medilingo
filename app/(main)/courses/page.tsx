@@ -17,7 +17,7 @@ const MedicalCategoriesPage = async () => {
 
   return (
     <div className="mx-auto h-full max-w-[1550px] px-3">
-      <h1 className="text-2xl font-bold text-neutral-700">Courses</h1>
+      <h1 className="text-2xl font-bold text-neutral-700">Flascard Sets</h1>
       <p className="text-md text-neutral-600 mb-4">Select a medical category to start mastering terminology used by healthcare professionals</p>
 
       <List categories={categories} activeCategoryId={userProgress?.activeCategoryId} />
