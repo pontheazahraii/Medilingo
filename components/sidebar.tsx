@@ -21,7 +21,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
       )}
     >
       
-      <Link href="/home">
+      <Link href="/learn">
         <div className="flex items-center gap-x-3 pb-7 pl-4 pt-8">
           <Image src="/Pete_Alone_Logo.png" alt="Mascot" height={45} width={45} />
 
