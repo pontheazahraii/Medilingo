@@ -23,11 +23,6 @@ const MarketingPage = () => {
           >
             Login
           </Button>
-          <Link href="/sign-up">
-            <Button size="sm">
-              Get Started
-            </Button>
-          </Link>
         </div>
       </nav>
 
