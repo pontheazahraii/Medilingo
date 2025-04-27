@@ -80,21 +80,21 @@ export const MEDICAL_CATEGORIES = [
   {
     id: 7,
     title: "Multiple Choice Practice",
-    imageSrc: "/communication-icon.svg",
+    imageSrc: "/MC_Card.png",
     description: "Practice all 6 systems in a multiple choice format",
     subcategories: []
   },
   {
     id: 8,
     title: "Fill In The Blank Practice",
-    imageSrc: "/literacy-icon.svg",
+    imageSrc: "/FillBlank_Card.png",
     description: "Practice all 6 systems in a fill in the black format",
     subcategories: []
   },
   {
     id: 9,
     title: "Diagram Practice",
-    imageSrc: "/emergency-icon.svg",
+    imageSrc: "/Diagram_Card.png",
     description: "Practice identifying parts of all 6 body systems on diagrams",
     subcategories: []
   }
