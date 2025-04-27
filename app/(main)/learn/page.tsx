@@ -73,14 +73,14 @@ const MedicalLearningPage = async () => {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
           {/* Left side: Logo + App name */}
           <div className="flex items-center gap-x-3">
-            <img src="/Pete_Alone_Logo.png" alt="Medilingo Mascot" className="h-10 w-10" />
+            {/* <img src="/Pete_Alone_Logo.png" alt="Medilingo Mascot" className="h-10 w-10" /> */}
             <h1 className="text-2xl font-bold text-blue-600 tracking-wide">
-              Medilingo
+              My Dashboard
             </h1>
           </div>
 
           {/* Right side: Link to GitHub */}
-          <div className="flex space-x-4 mt-4 sm:mt-0">
+          <div className="flex space-x-4 mt-4 sm:mt-0 text-sm">
               Helping You Keep Those Medical Terms In The Noggin'
           </div>
         </div>
