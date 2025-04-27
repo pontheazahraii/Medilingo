@@ -116,9 +116,18 @@ const MCQuestionCourse = () => {
       {isAnswerCorrect !== null && (
         <div className={`text-xl ${isAnswerCorrect ? "text-green-600" : "text-red-600"}`}>
           {isAnswerCorrect ? "Correct!" : "Incorrect!"}
+
+          {/* Display Image Based on Answer */}
+          <div className="mt-4">
+            <img
+              src={isAnswerCorrect ? "/happy-pete.png" : "/angry-pete.png"} // Adjust the image path
+              alt={isAnswerCorrect ? "Correct" : "Incorrect"}
+              className="w-32 h-32 mx-auto"
+            />
+          </div>
         </div>
       )}
-      
+
 
 
       {/* Next Question Button */}
