@@ -28,7 +28,15 @@ def get_db_connection():
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the Medilingo API!"}
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT CURRENT_TIMESTAMP;') 
+    current_time = cur.fetchone()[0]
+    cur.close()
+    conn.close()
+    
+    return {"message": "Welcome to the Medilingo API!", "current_time": current_time}
+
 
 @app.get("/systems")
 def get_systems():
