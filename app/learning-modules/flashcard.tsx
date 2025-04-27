@@ -119,12 +119,12 @@ export const FlashcardMode = ({ flashcards, onComplete, courseId }: FlashcardMod
     <div className="flex h-full flex-col items-center justify-between p-4">
       <div className="w-full max-w-md space-y-4">
         <div className="flex items-center justify-between">
-          <Button onClick={() => router.push("/learn")} variant="ghost" size="sm">
-            <X className="h-4 w-4 mr-2" />
-            Exit
-          </Button>
+          {/* <Button onClick={() => router.push("/learn")} variant="ghost" size="sm"> */}
+            {/* <X className="h-4 w-4 mr-2" /> */}
+            {/* Exit */}
+          {/* </Button> */}
           <div className="text-sm font-medium">
-            {currentIndex + 1} of {flashcards.length} • {cardsRemaining} remaining
+            {/* {currentIndex + 1} of {flashcards.length} • {cardsRemaining} remaining */}
           </div>
         </div>
 
@@ -132,7 +132,7 @@ export const FlashcardMode = ({ flashcards, onComplete, courseId }: FlashcardMod
           className="relative w-full cursor-pointer"
           onClick={handleFlip}
         >
-          <Card className={`w-full h-64 p-6 flex items-center justify-center transition-all duration-500 ${flipped ? "bg-blue-50" : "bg-white"}`}>
+          <Card className={`w-[80vw] h[40vw] p-6 flex items-center justify-center transition-all duration-500 ${flipped ? "bg-blue-50" : "bg-white"}`}>
             {/* Star button in top right */}
             <button 
               onClick={handleToggleStar}

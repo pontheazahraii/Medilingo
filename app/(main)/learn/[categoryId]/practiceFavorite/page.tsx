@@ -3,30 +3,27 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { use } from "react";
-import { fetchTerminology } from "@/api/api";
-import { useSessionProgress } from "@/app/contexts/SessionProgressContext";
-import { toast } from "sonner";
 import { Volume2, Star } from "lucide-react";
+import { useSessionProgress } from "@/app/contexts/SessionProgressContext";
+import { fetchTerminology } from "@/api/api";
+import { toast } from "sonner";
 
-
-interface PracticePageProps {
+interface PracticeFavoritesPageProps {
   params: {
     categoryId: string;
   };
 }
 
-const PracticePage = ({ params }: PracticePageProps) => {
-  const numericCategoryId = use(params).categoryId;
+const PracticeFavoritesPage = ({ params }: PracticeFavoritesPageProps) => {
+  const numericCategoryId = Number(params.categoryId);
   const router = useRouter();
+  const { isCardStarred, toggleStarCard } = useSessionProgress();
 
-  // State for flashcards, loading state, and error handling
   const [flashcards, setFlashcards] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { addReviewed, setTotalCardsForCourse, toggleStarCard, isCardStarred } = useSessionProgress();
 
   // Fetch the flashcards from the API based on the categoryId
   useEffect(() => {
@@ -35,7 +32,7 @@ const PracticePage = ({ params }: PracticePageProps) => {
         const data = await fetchTerminology(numericCategoryId);
         setFlashcards(data);
       } catch (err) {
-        setError(true);
+        setError("Error loading flashcards.");
       } finally {
         setLoading(false);
       }
@@ -43,12 +40,15 @@ const PracticePage = ({ params }: PracticePageProps) => {
     loadFlashcards();
   }, [numericCategoryId]);
 
+  // Filter starred cards
+  const starredCards = flashcards.filter(card => isCardStarred(numericCategoryId, card.id));
+
   const handleFlip = () => {
     setFlipped((prev) => !prev);
   };
 
   const handleNext = () => {
-    if (currentIndex < flashcards.length - 1) {
+    if (currentIndex < starredCards.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setFlipped(false); // Reset flip when moving to next
     }
@@ -91,30 +91,37 @@ const PracticePage = ({ params }: PracticePageProps) => {
 
   const handleSpeak = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card from flipping
-    const textToSpeak = flipped ? flashcards[currentIndex].definition : flashcards[currentIndex].term;
+    const textToSpeak = flipped ? starredCards[currentIndex].definition : starredCards[currentIndex].term;
     speakText(textToSpeak);
   };
 
-  const currentFlashcard = flashcards[currentIndex];
+  const currentFlashcard = starredCards[currentIndex];
 
   if (loading) {
-    return <div className="p-8 text-center text-xl font-bold">Loading flashcards {numericCategoryId}...</div>;
+    return <div className="p-8 text-center text-xl font-bold">Loading flashcards...</div>;
   }
+
   if (error) {
     return (
       <div className="p-8 text-center text-3xl font-bold">
-        Error loading flashcards. {numericCategoryId}
+        {error}
       </div>
+    );
+  }
+
+  if (starredCards.length === 0) {
+    return (
+      <div className="p-8 text-center text-xl font-bold">No favorite flashcards yet.</div>
     );
   }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8">
       <Button onClick={handleGoBack} className="mb-6 self-start">
-        ← Back to Flashcards
+        ← Back to Course
       </Button>
 
-      <h1 className="text-3xl font-bold mb-6">Practice Flashcards</h1>
+      <h1 className="text-3xl font-bold mb-6">Practice Your Favorite Flashcards</h1>
 
       {/* Flashcard */}
       <div
@@ -126,24 +133,24 @@ const PracticePage = ({ params }: PracticePageProps) => {
         </p>
       </div>
 
-      {/* Speak Button */}
+      {/* Listen Button */}
       <Button 
-                onClick={handleSpeak}
-                variant="ghost" 
-                size="sm"
-                className="mt-2"
-                aria-label="Listen to pronunciation"
-              >
-                <Volume2 className="h-4 w-4 mr-2" />
-                Listen
-              </Button>
+        onClick={handleSpeak} 
+        variant="ghost" 
+        size="sm"
+        className="mt-2"
+        aria-label="Listen to pronunciation"
+      >
+        <Volume2 className="h-4 w-4 mr-2" />
+        Listen
+      </Button>
 
       {/* Navigation Buttons */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 mt-4">
         <Button onClick={handlePrevious} disabled={currentIndex === 0}>
           Previous
         </Button>
-        <Button onClick={handleNext} disabled={currentIndex === flashcards.length - 1}>
+        <Button onClick={handleNext} disabled={currentIndex === starredCards.length - 1}>
           Next
         </Button>
       </div>
@@ -151,4 +158,4 @@ const PracticePage = ({ params }: PracticePageProps) => {
   );
 };
 
-export default PracticePage;
+export default PracticeFavoritesPage;

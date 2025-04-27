@@ -38,12 +38,12 @@ const getCourseTitle = (id: number): string => {
     "Respiratory System", 
     "Nervous System"
   ];
-  return categories[id - 1] || "Medical Terminology";
+  return categories[id] || "Medical Terminology";
 };
 
 const LearnPage = (props: LearnPageProps) => {
   const router = useRouter();  
-  const numericCategoryId = Number(props.params.categoryId);
+  const numericCategoryId = Number(props.params.categoryId) - 1;
   const { isCardStarred, toggleStarCard } = useSessionProgress();
   
   console.log("Category Id: ", numericCategoryId)
@@ -54,6 +54,10 @@ const LearnPage = (props: LearnPageProps) => {
 
   const handlePracticeClick = () => {
     router.push(`/learn/${numericCategoryId}/practice`); // New behavior: navigate!
+  };
+
+  const handlePracticeFavoriteClick = () => {
+    router.push(`/learn/${numericCategoryId}/practiceFavorite`); // New behavior: navigate!
   };
 
   const handleToggleStar = (cardId: number, e: React.MouseEvent) => {
@@ -174,15 +178,24 @@ const LearnPage = (props: LearnPageProps) => {
         >
           ← Back to Courses
         </Button>
+            <div className="flex flex-col gap-4">
         <Button 
           onClick={handlePracticeClick} 
           className="rounded-full px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium shadow-md transition-all"
         >
           Practice Flashcards
         </Button>
+
+        <Button 
+          onClick={handlePracticeFavoriteClick} 
+          className="rounded-full px-8 py-3 bg-yellow-600 hover:bg-yellow-500 text-white font-medium shadow-md transition-all"
+        >
+          Practice Favorites
+        </Button>
+      </div>
       </div>
       
-      <h1 className="text-3xl font-bold mb-6 text-center">Course {numericCategoryId} - {courseTitle}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">{courseTitle}</h1>
       
       {/* Session Progress */}
       <div className="w-full max-w-md mb-8">
