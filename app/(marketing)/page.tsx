@@ -19,7 +19,7 @@ const MarketingPage = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => signIn("google", { callbackUrl: "/courses" })}
+            onClick={() => signIn("google", { callbackUrl: "/learn" })}
           >
             Login
           </Button>
