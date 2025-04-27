@@ -1,32 +1,86 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, X, Check } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Check, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-
-type Flashcard = {
-  id: number;
-  term: string;
-  definition: string;
-  category: string;
-  subcategory: string;
-};
+import { fetchTerminology, TerminologyItem } from "@/lib/api";
 
 type FlashcardModeProps = {
-  flashcards: Flashcard[];
+  systemId?: number;
   onComplete: () => void;
 };
 
-export const FlashcardMode = ({ flashcards, onComplete }: FlashcardModeProps) => {
+export const FlashcardMode = ({ systemId, onComplete }: FlashcardModeProps) => {
+  const [flashcards, setFlashcards] = useState<TerminologyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [knownCards, setKnownCards] = useState<number[]>([]);
   const [reviewCards, setReviewCards] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  const loadFlashcards = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      // If systemId is provided, filter by it, otherwise get all flashcards
+      const params = systemId ? { system_id: systemId } : {};
+      const data = await fetchTerminology(params);
+      
+      if (data.length === 0) {
+        setError("No flashcards found");
+      } else {
+        setFlashcards(data);
+      }
+    } catch (err: any) {
+      console.error("Error loading flashcards:", err);
+      setError(`Failed to load flashcards: ${err?.message || "Unknown error"}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadFlashcards();
+  }, [systemId]);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center p-4">
+        <div className="flex flex-col items-center">
+          <div className="text-xl mb-4">Loading flashcards...</div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || flashcards.length === 0) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center p-4">
+        <div className="text-xl text-red-500 mb-4">
+          {error || "No flashcards available"}
+        </div>
+        <div className="flex gap-4">
+          <Button onClick={() => router.push("/learn")} variant="primaryOutline">
+            Return to Learn
+          </Button>
+          <Button onClick={loadFlashcards} variant="primary">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const currentCard = flashcards[currentIndex];
   const cardsRemaining = flashcards.length - currentIndex;
@@ -89,7 +143,8 @@ export const FlashcardMode = ({ flashcards, onComplete }: FlashcardModeProps) =>
           <Card className={`w-full h-64 p-6 flex items-center justify-center transition-all duration-500 ${flipped ? "bg-blue-50" : "bg-white"}`}>
             <div className="text-center">
               <div className="text-xs text-neutral-500 mb-2">
-                {currentCard.category} • {currentCard.subcategory}
+                System ID: {currentCard.system_id}
+                {currentCard.system_name && ` • ${currentCard.system_name}`}
               </div>
               <div className="text-xl font-bold">
                 {flipped ? currentCard.definition : currentCard.term}

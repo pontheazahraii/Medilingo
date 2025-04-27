@@ -9,22 +9,18 @@ import { SKELETAL_FLASHCARDS,
   NERVOUS_FLASHCARDS,
  } from "@/constants/medical-content";
 import { Button } from "@/components/ui/button"; 
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-interface LearnPageProps {
-  params: {
-    categoryId: string;
-  };
-}
-
-
-
-const LearnPage = (props: LearnPageProps) => {
-  const categoryId = Number(props.params.categoryId);
-  console.log("Category Id: ", categoryId)
-
+const LearnPage = () => {
+  // Use useParams instead of props.params
+  const params = useParams();
+  const categoryId = Number(Array.isArray(params.categoryId) 
+    ? params.categoryId[0] 
+    : params.categoryId);
   
-  const router = useRouter();                    // Inside your component (LearnPage)
+  console.log("Category Id: ", categoryId);
+  
+  const router = useRouter();
 
   const handlePracticeClick = () => {
     router.push(`/learn/${categoryId}/practice`); // New behavior: navigate!

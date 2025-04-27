@@ -23,3 +23,21 @@ This service hosts the Node.js backend for Medilingo, deployed using Google Clou
 docker build -t my-node-app .
 docker run -p 3001:3001 my-node-app
 ```
+
+## Flashcards Feature
+Medilingo includes a flashcard feature that allows users to study medical terminology. The flashcards are loaded dynamically from the PostgreSQL database.
+
+### API Endpoints
+- `/api/flashcards` - Retrieves all flashcards
+- `/api/flashcards?system_id=1` - Retrieves flashcards filtered by system_id
+
+### Required Environment Variables
+Make sure to set these in your environment:
+- `API_URL` - URL to the backend API (e.g., http://localhost:8080)
+
+### Database Schema
+The flashcards feature uses the `terminology` table which contains:
+- `id` - Primary key
+- `term` - The medical term
+- `definition` - The definition of the term
+- `system_id` - Foreign key to the `systems` table

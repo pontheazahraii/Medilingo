@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
-import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
 const MarketingPage = () => {
@@ -15,14 +14,12 @@ const MarketingPage = () => {
           <h1 className="text-2xl font-bold ml-2">Medilingo</h1>
         </div>
         <div className="flex items-center gap-x-4">
-          {/* OAuth login directly from here */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => signIn("google", { callbackUrl: "/courses" })}
-          >
-            Login
-          </Button>
+          {/* Replace OAuth login with a direct link */}
+          <Link href="/courses">
+            <Button variant="ghost" size="sm">
+              Login
+            </Button>
+          </Link>
         </div>
       </nav>
 

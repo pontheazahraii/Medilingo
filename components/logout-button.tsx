@@ -6,8 +6,8 @@ import { Button, ButtonProps } from "@/components/ui/button";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-// For production with Clerk
-import { useClerk } from "@clerk/nextjs";
+// Import the useAuth mock implementation from our mock file
+import { useAuth } from "@/lib/clerk-mock";
 
 // For development mock
 import { useMockClerk } from "@/components/mock-clerk-provider";
@@ -24,7 +24,7 @@ export const LogoutButton = ({
   const router = useRouter();
   
   // Try to use Clerk first (for production)
-  const clerkClient = useClerk?.() || null;
+  const clerkClient = useAuth() || null;
   
   // Fallback to mock clerk in development
   const mockClerk = useMockClerk();
