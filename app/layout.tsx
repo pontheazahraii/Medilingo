@@ -9,7 +9,7 @@ import { MockClerkProvider } from "@/components/mock-clerk-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config";
 import { HeadInject } from "./head-inject";
-
+import { SessionProgressProvider } from "./contexts/SessionProgressContext";
 
 
 import "./globals.css";
@@ -53,7 +53,9 @@ export default function RootLayout({
           <ExitModal />
           <HeartsModal />
           <PracticeModal />
-          {children}
+          <SessionProgressProvider>
+            {children}
+          </SessionProgressProvider>
         </body>
       </html>
     </ClerkProviderToUse>
