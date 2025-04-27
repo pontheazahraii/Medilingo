@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button";
 import { useRouter, useParams } from "next/navigation";
 import { fetchTerminology, TerminologyItem } from "@/lib/api";
 import { MEDICAL_CATEGORIES } from "@/constants/medical-content";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Database, HardDrive } from "lucide-react";
+
+// Extended interface that includes the source flag
+interface ExtendedTerminologyItem extends TerminologyItem {
+  source?: 'api' | 'mock';
+}
 
 const PracticePage = () => {
   // Use the useParams hook instead of relying on the params prop
@@ -15,11 +20,12 @@ const PracticePage = () => {
     : params.categoryId);
     
   const router = useRouter();
-  const [flashcards, setFlashcards] = useState<TerminologyItem[]>([]);
+  const [flashcards, setFlashcards] = useState<ExtendedTerminologyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dataSource, setDataSource] = useState<'api' | 'mock' | null>(null);
 
   // Find the category title for display purposes
   const categoryTitle = MEDICAL_CATEGORIES.find(
@@ -30,15 +36,20 @@ const PracticePage = () => {
     try {
       setIsLoading(true);
       setError(null);
+      setDataSource(null);
       
       // Map category IDs to system_ids for the API
-      // Assuming the system_id in the API corresponds to the categoryId
-      const data = await fetchTerminology({ system_id: categoryId });
+      const data = await fetchTerminology({ system_id: categoryId }) as ExtendedTerminologyItem[];
       
       if (data.length === 0) {
         setError("No flashcards found for this category");
       } else {
         setFlashcards(data);
+        
+        // Check the source flag from the first item
+        if (data[0]?.source) {
+          setDataSource(data[0].source);
+        }
       }
     } catch (err: any) {
       console.error("Error loading flashcards:", err);
@@ -115,7 +126,22 @@ const PracticePage = () => {
         ← Back to Flashcards
       </Button>
 
-      <h1 className="text-3xl font-bold mb-6">{categoryTitle}</h1>
+      <h1 className="text-3xl font-bold mb-2">{categoryTitle}</h1>
+      
+      {/* Data source indicator */}
+      <div className="flex items-center gap-2 mb-4 text-sm font-medium">
+        {dataSource === 'api' ? (
+          <>
+            <Database className="h-4 w-4 text-green-500" />
+            <span className="text-green-600">Using live API data</span>
+          </>
+        ) : dataSource === 'mock' ? (
+          <>
+            <HardDrive className="h-4 w-4 text-amber-500" />
+            <span className="text-amber-600">Using local fallback data</span>
+          </>
+        ) : null}
+      </div>
 
       {/* Progress indicator */}
       <div className="mb-4 text-gray-600">

@@ -9,8 +9,8 @@ import {
   NERVOUS_FLASHCARDS
 } from "@/constants/medical-content";
 
-// Base URL for the API
-const API_BASE_URL = "https://api-endpoint-227943627758.us-central1.run.app";
+// Base URL for the API - now using our own proxy endpoint to avoid CORS
+const API_BASE_URL = "/api/terminology"; // Relative URL to our proxy
 
 // Type definition for terminology data
 export interface TerminologyItem {
@@ -19,6 +19,7 @@ export interface TerminologyItem {
   definition: string;
   system_id: number;
   system_name?: string; // Optional field that might be included
+  source?: 'api' | 'mock'; // Add source flag to indicate data origin
 }
 
 export interface TerminologyParams {
@@ -41,42 +42,48 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 1,
-        system_name: "Skeletal System"
+        system_name: "Skeletal System",
+        source: 'mock' as const
       })),
       ...MUSCULAR_FLASHCARDS.map(card => ({
         id: card.id,
         term: card.term,
         definition: card.definition,
         system_id: 2,
-        system_name: "Muscular System"
+        system_name: "Muscular System",
+        source: 'mock' as const
       })),
       ...CIRCULATORY_FLASHCARDS.map(card => ({
         id: card.id,
         term: card.term,
         definition: card.definition,
         system_id: 3,
-        system_name: "Circulatory System"
+        system_name: "Circulatory System",
+        source: 'mock' as const
       })),
       ...DIGESTIVE_FLASHCARDS.map(card => ({
         id: card.id,
         term: card.term,
         definition: card.definition,
         system_id: 4,
-        system_name: "Digestive System"
+        system_name: "Digestive System",
+        source: 'mock' as const
       })),
       ...RESPIRATORY_FLASHCARDS.map(card => ({
         id: card.id,
         term: card.term,
         definition: card.definition,
         system_id: 5,
-        system_name: "Respiratory System"
+        system_name: "Respiratory System",
+        source: 'mock' as const
       })),
       ...NERVOUS_FLASHCARDS.map(card => ({
         id: card.id,
         term: card.term,
         definition: card.definition,
         system_id: 6,
-        system_name: "Nervous System"
+        system_name: "Nervous System",
+        source: 'mock' as const
       }))
     ];
   }
@@ -89,7 +96,8 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 1,
-        system_name: "Skeletal System"
+        system_name: "Skeletal System",
+        source: 'mock' as const
       }));
     case 2:
       return MUSCULAR_FLASHCARDS.map(card => ({
@@ -97,7 +105,8 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 2,
-        system_name: "Muscular System"
+        system_name: "Muscular System",
+        source: 'mock' as const
       }));
     case 3:
       return CIRCULATORY_FLASHCARDS.map(card => ({
@@ -105,7 +114,8 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 3,
-        system_name: "Circulatory System"
+        system_name: "Circulatory System",
+        source: 'mock' as const
       }));
     case 4:
       return DIGESTIVE_FLASHCARDS.map(card => ({
@@ -113,7 +123,8 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 4,
-        system_name: "Digestive System"
+        system_name: "Digestive System",
+        source: 'mock' as const
       }));
     case 5:
       return RESPIRATORY_FLASHCARDS.map(card => ({
@@ -121,7 +132,8 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 5,
-        system_name: "Respiratory System"
+        system_name: "Respiratory System",
+        source: 'mock' as const
       }));
     case 6:
       return NERVOUS_FLASHCARDS.map(card => ({
@@ -129,7 +141,8 @@ function getMockTerminologyData(systemId?: number): TerminologyItem[] {
         term: card.term,
         definition: card.definition,
         system_id: 6,
-        system_name: "Nervous System"
+        system_name: "Nervous System",
+        source: 'mock' as const
       }));
     default:
       return [];
@@ -151,34 +164,29 @@ export async function fetchTerminology(params: TerminologyParams = {}): Promise<
     if (params.limit !== undefined) queryParams.append("limit", params.limit.toString());
 
     const queryString = queryParams.toString();
-    const url = `${API_BASE_URL}/terminology${queryString ? `?${queryString}` : ''}`;
+    const url = `${API_BASE_URL}${queryString ? `?${queryString}` : ''}`;
 
     console.log(`Fetching terminology from: ${url}`);
     
-    // Try to fetch from the API
-    try {
-      const response = await fetch(url);
-      
-      if (!response.ok) {
-        const errorText = await response.text().catch(() => 'No error details available');
-        throw new Error(`API error (${response.status}): ${errorText}`);
-      }
-      
-      const data = await response.json();
-      
-      // Log the data count for debugging
-      console.log(`Fetched ${data.length} terminology items from API`);
-      
-      return data;
-    } catch (apiError) {
-      // If there's a CORS or network error, fall back to mock data
-      console.warn(`API call failed, using mock data instead: ${apiError}`);
-      const mockData = getMockTerminologyData(params.system_id);
-      console.log(`Using ${mockData.length} mock terminology items`);
-      return mockData;
+    // Fetch from our proxy endpoint, which handles API calls or serves mock data
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`API error (${response.status}): ${response.statusText}`);
     }
+    
+    const data = await response.json();
+    
+    // Our proxy should already include the source flag
+    console.log(`Fetched ${data.length} terminology items`);
+    
+    return data;
   } catch (error) {
     console.error("Error in fetchTerminology:", error);
-    throw error;
+    
+    // Only in case of a network error (not API error), use local fallback
+    const mockData = getMockTerminologyData(params.system_id);
+    console.log(`Error fetching from proxy, using ${mockData.length} local mock items`);
+    return mockData;
   }
 } 
