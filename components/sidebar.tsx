@@ -23,28 +23,22 @@ export const Sidebar = ({ className }: SidebarProps) => {
       
       <Link href="/courses">
         <div className="flex items-center gap-x-3 pb-7 pl-4 pt-8">
-          <Image src="/mascot.svg" alt="Mascot" height={40} width={40} />
+          <Image src="/Pete_Alone_Logo.png" alt="Mascot" height={45} width={45} />
 
           <h1 className="text-2xl font-extrabold tracking-wide text-blue-500">
-            Medilingo
+            Medilingo 
           </h1>
         </div>
-      </Link>
+      </Link> 
 
       
 
       <div className="flex flex-1 flex-col gap-y-2">
-        <SidebarItem label="Courses" href="/courses" iconSrc="/learn.svg" />
-        <SidebarItem label="Healthcare Learn" href="/learn" iconSrc="/learn.svg" />
-        <SidebarItem label="Anatomy" href="/courses?category=anatomy" iconSrc="/anatomy-icon.svg" />
-        <SidebarItem label="Pharmacology" href="/courses?category=pharmacology" iconSrc="/pharma-icon.svg" />
-        <SidebarItem
-          label="Progress"
-          href="/progress"
-          iconSrc="/leaderboard.svg"
-        />
-        <SidebarItem label="Medical Quests" href="/quests" iconSrc="/quests.svg" />
-        <SidebarItem label="Resource Shop" href="/shop" iconSrc="/shop.svg" />
+        <SidebarItem label="Home" href="/learn" iconSrc="/learn.svg" />
+        <SidebarItem label="Courses" href="/courses" iconSrc="/robot.svg" />
+        <SidebarItem label="Quests" href="/quests" iconSrc="/quests.svg" />
+        <SidebarItem label="My Progress" href="/progress" iconSrc="/leaderboard.svg"/>
+        <SidebarItem label="Shop" href="/progress" iconSrc="/shop.svg" />
       </div>
 
       <div className="mb-2 mt-auto flex flex-col gap-y-2 border-t pt-2">
