@@ -13,8 +13,8 @@ const QuizzesPage = () => {
   const [quizzes, setQuizzes] = useState<any[]>([]);  // State to hold quiz data
 
   useEffect(() => {
-    // Simulating fetching the quizzes data from the `MEDICAL_CATEGORIES` quizzes list
-    const quizzesData = MEDICAL_QUIZZES.filter(category => category.quiz);  // Assuming `quiz` is a property indicating quizzes
+    // Simulating fetching the quizzes data from the `MEDICAL_QUIZZES` list
+    const quizzesData = MEDICAL_QUIZZES.filter(quiz => quiz.id);  // Assuming `quiz` is a property indicating quizzes
     setQuizzes(quizzesData);
     setLoading(false);
   }, []);
@@ -25,20 +25,6 @@ const QuizzesPage = () => {
 
   return (
     <div className="mx-auto h-full max-w-[1550px] px-3">
-      {/* Header
-      <header className="w-full bg-gray-100 py-6 shadow-sm">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-6">
-          <h1 className="text-2xl font-bold text-blue-600 tracking-wide">
-            Quizzes
-          </h1>
-        </div>
-      </header> */}
-
-      {/* Welcome Banner */}
-      {/* <div className="mx-auto mt-6 w-[90%] bg-blue-500 text-white py-3 px-6 text-center font-bold text-3xl rounded-2xl shadow-md">
-        Welcome to the Quiz Section
-      </div> */}
-
       {/* Quiz Cards */}
       <div className="mt-10 px-8">
         <h2 className="text-2xl font-bold mb-6">Your Available Quizzes</h2>
@@ -51,23 +37,31 @@ const QuizzesPage = () => {
             >
               <h3 className="font-semibold text-lg mb-2">{quiz.title}</h3>
 
-              {/* Quiz Progress Bar */}
+              {/* Quiz Progress Bar
               <div className="w-full bg-gray-200 rounded-full h-4">
                 <div
                   className="bg-green-500 h-4 rounded-full"
                   style={{ width: `${quiz.progress}%` }}
                 />
               </div>
-              <p className="text-sm text-gray-600 mt-2">{quiz.progress}% complete</p>
+              <p className="text-sm text-gray-600 mt-2">{quiz.progress}% complete</p> */}
 
               <SessionProgressDisplay courseId={quiz.id} />
 
-              {/* Button to start quiz */}
-              <Link href={`/learn/${quiz.id}/mc-question-course`}>
-                <Button className="mt-4 rounded-full px-6 py-3 bg-blue-600 text-white hover:bg-blue-500">
-                  Start Quiz
-                </Button>
-              </Link>
+              {/* Conditional button for MC or FIB quiz */}
+              {quiz.type === "mc" ? (
+                <Link href={`/quizzes/MC`}>
+                  <Button className="mt-4 rounded-full px-6 py-3 bg-blue-600 text-white hover:bg-blue-500">
+                    Start
+                  </Button>
+                </Link>
+              ) : quiz.type === "fib" ? (
+                <Link href={`/quizzes/FIB`}>
+                  <Button className="mt-4 rounded-full px-6 py-3 bg-green-600 text-white hover:bg-green-500">
+                    Start 
+                  </Button>
+                </Link>
+              ) : null}
             </div>
           ))}
         </div>

@@ -100,21 +100,125 @@ export const MEDICAL_CATEGORIES = [
   // }
 ];
 
-
 export const MEDICAL_QUIZZES = [
   {
     id: 1,
     title: "Multiple Choice Questions",
-    quiz: true,  // Flag indicating it's a quiz
-    progress: 75, // Example progress
+    progress: 75,  // Example progress value
+    type: "mc",    // Multiple choice quiz
+    questions: [
+      {
+        question: "What term matches the following definition? 'Painful inflammation and stiffness of the bones and joints'",
+        options: [
+          "Osteoarthritis",
+          "Scoliosis",
+          "Metatars/o",
+          "Pronation"
+        ],
+        correctAnswer: "Osteoarthritis"
+      },
+      {
+        question: "What is the medical term for the condition of having a curvature in the spine?",
+        options: [
+          "Scoliosis",
+          "Kyphosis",
+          "Lordosis",
+          "Osteoporosis"
+        ],
+        correctAnswer: "Scoliosis"
+      },
+      {
+        question: "Which term refers to the enlargement of the liver?",
+        options: [
+          "Hepatomegaly",
+          "Splenomegaly",
+          "Cirrhosis",
+          "Jaundice"
+        ],
+        correctAnswer: "Hepatomegaly"
+      },
+      {
+        question: "Which term refers to the inflammation of the lungs?",
+        options: [
+          "Pneumonia",
+          "Asthma",
+          "Bronchitis",
+          "Pleurisy"
+        ],
+        correctAnswer: "Pneumonia"
+      },
+      {
+        question: "Which of the following is the term for difficulty swallowing?",
+        options: [
+          "Dysphagia",
+          "Dyspnea",
+          "Dysphasia",
+          "Aphasia"
+        ],
+        correctAnswer: "Dysphagia"
+      },
+      {
+        question: "What is the medical term for high blood pressure?",
+        options: [
+          "Hypertension",
+          "Hypotension",
+          "Arrhythmia",
+          "Tachycardia"
+        ],
+        correctAnswer: "Hypertension"
+      }
+    ]
   },
   {
     id: 2,
     title: "Fill In The Blank Questions",
-    quiz: true,
-    progress: 45,
-  },
+    progress: 45,  // Example progress value
+    type: "fib",   // Fill in the blank quiz
+    questions: [
+      {
+        question: "______ is the term for the removal of the gallbladder.",
+        options: [
+          "Cholecystectomy",
+          "Gastrectomy",
+          "Appendectomy",
+          "Hysterectomy"
+        ],
+        correctAnswer: "Cholecystectomy"
+      },
+      {
+        question: "______ refers to the narrowing of the arteries.",
+        options: [
+          "Arteriosclerosis",
+          "Atherosclerosis",
+          "Cardiomegaly",
+          "Cerebrovascular"
+        ],
+        correctAnswer: "Arteriosclerosis"
+      },
+      {
+        question: "The term for inflammation of the appendix is called ______.",
+        options: [
+          "Appendicitis",
+          "Gastritis",
+          "Colitis",
+          "Peritonitis"
+        ],
+        correctAnswer: "Appendicitis"
+      },
+      {
+        question: "A ______ is a medical term for a tumor or swelling.",
+        options: [
+          "Neoplasm",
+          "Lesion",
+          "Cyst",
+          "Mass"
+        ],
+        correctAnswer: "Neoplasm"
+      }
+    ]
+  }
 ];
+
 
 
 // Flashcards for each system
